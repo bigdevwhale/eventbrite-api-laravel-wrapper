@@ -1,0 +1,38 @@
+{
+  "name": "marat555/youtube",
+  "description": "Laravel PHP Facade/Wrapper for the Eventbrite Data API v3",
+  "keywords": ["eventbrite", "api", "event", "laravel", "marat555"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Marat Badykov",
+      "email": "marat.badykov.555@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "marat555\\Eventbrite\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "marat555\\Eventbrite\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "marat555\\Eventbrite\\EventbriteServiceProvider"
+      ],
+      "aliases": {
+        "Eventbrite": "\\Eventbrite\\Facades\\Eventbrite"
+      }
+    }
+  }
+}
