@@ -1,6 +1,6 @@
 <?php
 
-namespace Matat555\Youtube;
+namespace Matat555\Eventbrite;
 
 class Eventbrite
 {

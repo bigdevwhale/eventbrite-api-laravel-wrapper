@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Tests;
 
-class YoutubeTest extends TestCase
+class EventbriteTest extends TestCase
 {
     //TODO: implement
 }
