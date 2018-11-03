@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidDateFormatException extends RancherErrorException
+class InvalidDateFormatException extends EventbriteErrorException
 {
     //
 }

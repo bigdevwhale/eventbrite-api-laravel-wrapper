@@ -45,7 +45,7 @@ class EventbriteServiceProvider extends ServiceProvider {
             return new Eventbrite($client);
         });
 
-        $this->app->alias('rancher', 'Benmag\Rancher\Rancher');
+        $this->app->alias('eventbrite', 'Marat555\Eventbrite\Eventbrite');
 
     }
 }

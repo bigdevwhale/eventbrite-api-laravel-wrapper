@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidOptionException extends RancherErrorException
+class InvalidOptionException extends EventbriteErrorException
 {
     //
 }

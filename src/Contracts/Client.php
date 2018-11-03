@@ -3,10 +3,10 @@
 namespace Marat555\Eventbrite\Contracts;
 
 /**
- * Rancher API wrapper for Laravel
+ * Eventbrite API wrapper for Laravel
  *
- * @package  Rancher
- * @author   @benmagg
+ * @package  Eventbrite
+ * @author   @marat555
  */
 interface Client {
 

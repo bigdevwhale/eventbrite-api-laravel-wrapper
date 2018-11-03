@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidCSRFTokenException extends RancherErrorException
+class InvalidCSRFTokenException extends EventbriteErrorException
 {
     //
 }

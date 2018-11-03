@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class ServerErrorException extends RancherErrorException
+class ServerErrorException extends EventbriteErrorException
 {
     //
 }

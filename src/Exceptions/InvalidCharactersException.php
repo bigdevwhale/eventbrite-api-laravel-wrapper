@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidCharactersException extends RancherErrorException
+class InvalidCharactersException extends EventbriteErrorException
 {
     //
 }

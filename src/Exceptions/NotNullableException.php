@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class NotNullableException extends RancherErrorException
+class NotNullableException extends EventbriteErrorException
 {
     //
 }

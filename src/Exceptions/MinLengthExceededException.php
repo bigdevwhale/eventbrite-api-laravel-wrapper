@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class MinLengthExceededException extends RancherErrorException
+class MinLengthExceededException extends EventbriteErrorException
 {
     //
 }

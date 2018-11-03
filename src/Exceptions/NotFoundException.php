@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class NotFoundException extends RancherErrorException
+class NotFoundException extends EventbriteErrorException
 {
     //
 }

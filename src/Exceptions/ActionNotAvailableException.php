@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class ActionNotAvailableException extends RancherErrorException
+class ActionNotAvailableException extends EventbriteErrorException
 {
     //
 }

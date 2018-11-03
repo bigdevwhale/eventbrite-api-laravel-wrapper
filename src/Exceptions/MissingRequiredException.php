@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class MissingRequiredException extends RancherErrorException
+class MissingRequiredException extends EventbriteErrorException
 {
     //
 }

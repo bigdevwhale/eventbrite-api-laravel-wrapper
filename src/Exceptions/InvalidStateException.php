@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidStateException extends RancherErrorException
+class InvalidStateException extends EventbriteErrorException
 {
     //
 }

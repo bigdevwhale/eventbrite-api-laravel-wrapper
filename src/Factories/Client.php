@@ -7,10 +7,10 @@ use GuzzleHttp\Client as HttpClient;
 use \Marat555\Eventbrite\Contracts\Client as ClientInterface;
 
 /**
- * Rancher API wrapper for Laravel
+ * Eventbrite API wrapper for Laravel
  *
- * @package  Rancher
- * @author   @benmagg
+ * @package  Eventbrite
+ * @author   @marat555
  */
 class Client implements ClientInterface {
 

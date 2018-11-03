@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class ClusterUnavailableException extends RancherErrorException
+class ClusterUnavailableException extends EventbriteErrorException
 {
     //
 }

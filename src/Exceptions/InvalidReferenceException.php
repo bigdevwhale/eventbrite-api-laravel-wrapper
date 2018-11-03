@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidReferenceException extends RancherErrorException
+class InvalidReferenceException extends EventbriteErrorException
 {
     //
 }

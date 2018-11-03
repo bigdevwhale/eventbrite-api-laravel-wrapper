@@ -11,7 +11,7 @@ use Marat555\Eventbrite\Exceptions\ServerErrorException;
 use Marat555\Eventbrite\Exceptions\InvalidTypeException;
 use Marat555\Eventbrite\Exceptions\NotNullableException;
 use Marat555\Eventbrite\Exceptions\InvalidStateException;
-use Marat555\Eventbrite\Exceptions\RancherErrorException;
+use Marat555\Eventbrite\Exceptions\EventbriteErrorException;
 use Marat555\Eventbrite\Exceptions\UnauthorizedException;
 use Marat555\Eventbrite\Exceptions\InvalidActionException;
 use Marat555\Eventbrite\Exceptions\InvalidFormatException;
@@ -105,7 +105,7 @@ class ErrorHandler {
             case "ClusterUnavailable":
                 throw new ClusterUnavailableException($eventbrite->message, $eventbrite->status);
             default:
-                throw new RancherErrorException($eventbrite->message ? $eventbrite->message : $eventbrite->rancher->code, $eventbrite->status);
+                throw new EventbriteErrorException($eventbrite->message ? $eventbrite->message : $eventbrite->eventbrite->code, $eventbrite->status);
 
         }
 

@@ -2,35 +2,25 @@
 
 namespace Matat555\Eventbrite;
 
-class Eventbrite
-{
-    /**
-     * @var string
-     */
-    protected $eventbriteToken; // from the config file
+use Marat555\Eventbrite\Factories\Client;
 
-    /**
-     * @var string
-     */
-    protected $eventbriteClientSecret; // from the config file
+/**
+ * Eventbrite API wrapper for Laravel
+ *
+ * @package  Eventbrite
+ * @author   @marat555
+ */
+class Eventbrite {
 
-    /**
-     * Constructor
-     * $eventbrite = new Eventbrite(['token' => 'TOKEN HERE', 'secret' => 'CLIENT SECRET HERE'])
-     *
-     * @param string $token
-     * @param $secret
-     * @throws \Exception
-     */
-    public function __construct($token, $secret)
+    public $client;
+
+    public function __construct(Client $client)
     {
-        if (is_string($token) && !empty($token) && is_string($secret) && !empty($secret)) {
-            $this->eventbriteToken = $token;
-            $this->eventbriteClientSecret = $secret;
-        } else {
-            throw new \Exception('Eventbrite token and client secret are required, please visit https://www.eventbrite.com/developer/v3/api_overview/authentication/');
-        }
+        $this->client = $client;
     }
 
-
+    public function setClient($client)
+    {
+        $this->client = $client;
+    }
 }

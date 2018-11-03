@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidBodyContentException extends RancherErrorException
+class InvalidBodyContentException extends EventbriteErrorException
 {
     //
 }
