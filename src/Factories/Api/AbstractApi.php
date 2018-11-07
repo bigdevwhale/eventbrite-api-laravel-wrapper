@@ -1,6 +1,6 @@
 <?php
 
-namespace Benmag\Rancher\Factories\Api;
+namespace Marat555\Eventbrite\Factories\Api;
 use Marat555\Eventbrite\Factories\Client;
 
 
@@ -80,7 +80,7 @@ abstract class AbstractApi
      */
     public function all()
     {
-        // Get all objects from Rancher API
+        // Get all objects from Eventbrite API
         $objects = $this->client->get($this->getEndpoint(), $this->prepareParams());
 
         // Decode the json response
@@ -211,26 +211,6 @@ abstract class AbstractApi
         // Instantiate new entity class
         return new $this->class($params);
 
-    }
-
-    /**
-     * By default Rancher's scope is the default
-     * Project the credentials have access too.
-     *
-     * Use this method to set the scope.
-     */
-    public function scope($projectId)
-    {
-        $this->scope = "projects/" . $projectId . "/";
-        return $this;
-    }
-
-    /**
-     * An alias of the scope method
-     */
-    public function project($projectId)
-    {
-        return $this->scope($projectId);
     }
 
     /**
