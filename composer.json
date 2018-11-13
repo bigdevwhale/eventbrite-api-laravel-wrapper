@@ -22,21 +22,21 @@
   },
   "autoload": {
     "psr-4": {
-      "marat555\\Eventbrite\\": "src"
+      "Marat555\\Eventbrite\\": "src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "marat555\\Eventbrite\\Tests\\": "tests"
+      "Marat555\\Eventbrite\\": "tests"
     }
   },
   "extra": {
     "laravel": {
       "providers": [
-        "marat555\\Eventbrite\\EventbriteServiceProvider"
+        "Marat555\\Eventbrite\\EventbriteServiceProvider"
       ],
       "aliases": {
-        "Eventbrite": "\\Eventbrite\\Facades\\Eventbrite"
+        "Eventbrite": "Marat555\\Eventbrite\\Facades\\Eventbrite"
       }
     }
   }
