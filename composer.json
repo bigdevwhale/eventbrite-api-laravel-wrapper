@@ -22,12 +22,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Marat555\\Eventbrite\\": "src"
+      "Marat555\\Eventbrite\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Marat555\\Eventbrite\\": "tests"
+      "Marat555\\Eventbrite\\": "tests/"
     }
   },
   "extra": {
