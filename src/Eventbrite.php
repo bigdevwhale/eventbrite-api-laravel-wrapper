@@ -1,6 +1,6 @@
 <?php
 
-namespace Matat555\Eventbrite;
+namespace Marat555\Eventbrite;
 
 use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\Api\Category;

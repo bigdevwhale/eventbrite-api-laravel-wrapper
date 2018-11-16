@@ -1,6 +1,6 @@
 <?php
 
-namespace Matat555\Eventbrite;
+namespace Marat555\Eventbrite;
 
 use Illuminate\Support\ServiceProvider;
 use Marat555\Eventbrite\Factories\Client;
