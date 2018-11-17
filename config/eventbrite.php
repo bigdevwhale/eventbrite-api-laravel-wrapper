@@ -10,7 +10,6 @@
 */
 
 return [
-    'baseUrl'	=> env('EVENTBRITE_BASE_URL') ? env('EVENTBRITE_BASE_URL') : 'https://localhost:8080/v3/',
-    'token'  => env('EVENTBRITE_TOKEN', 'YOUR_TOKEN'),
-    'secret' => env('EVENTBRITE_SECRET', 'YOUR_SECRET')
+    'baseUrl'	=> env('EVENTBRITE_BASE_URL') ? env('EVENTBRITE_BASE_URL') : 'https://www.eventbriteapi.com/v3/',
+    'token'  => env('EVENTBRITE_TOKEN', 'J2TJ4OQNA5PENREIGBAY1')
 ];

@@ -2,6 +2,7 @@
 
 namespace Marat555\Eventbrite\Factories\Api;
 
+use Marat555\Eventbrite\Factories\Entity\Category as CategoryEntity;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -17,7 +18,7 @@ class Category extends AbstractApi implements \Marat555\Eventbrite\Contracts\Api
      *
      * @var CategoryEntity
      */
-    protected $class = Category::class;
+    protected $class = CategoryEntity::class;
 
     /**
      * The Eventbrite API endpoint of the resource type.

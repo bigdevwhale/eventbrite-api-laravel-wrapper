@@ -13,5 +13,5 @@ class Subcategory extends AbstractEntity
     /**
      * @var Category
      */
-    public $patentCategory;
+    public $parentCategory;
 }

@@ -20,11 +20,16 @@ class Client implements ClientInterface {
     protected $client;
 
     /**
-     * @param $baseUrl
-     * @param $accessKey
-     * @param $secretKey
+     * @var string
      */
-    public function __construct($baseUrl, $accessKey, $secretKey)
+    protected $token;
+
+
+    /**
+     * @param $baseUrl
+     * @param $token
+     */
+    public function __construct($baseUrl, $token)
     {
 
         $stack = HandlerStack::create();
@@ -33,9 +38,10 @@ class Client implements ClientInterface {
 
         $this->client = new HttpClient([
             'handler' => $stack,
-            'base_uri' => $baseUrl,
-            'auth' => [$accessKey, $secretKey],
+            'base_uri' => $baseUrl
         ]);
+
+        $this->token = $token;
     }
 
     /**
@@ -75,6 +81,7 @@ class Client implements ClientInterface {
      */
     public function get($endPoint, array $params = [])
     {
+        $params += ["token" => $this->token];
         $response = $this->client->get($endPoint, $this->prepareData($params));
         switch ($response->getHeader('content-type'))
         {

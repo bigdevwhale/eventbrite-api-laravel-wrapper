@@ -4,21 +4,6 @@ namespace Marat555\Eventbrite\Factories\Entity;
 
 abstract class AbstractEntity
 {
-
-    /**
-     * List of available links for this entity
-     *
-     * @var array
-     */
-    protected $links;
-
-    /**
-     * List of available actions on this entity
-     *
-     * @var array
-     */
-    protected $actions;
-
     /**
      *
      * @param \stdClass|array|null $parameters
@@ -30,24 +15,13 @@ abstract class AbstractEntity
             return;
         }
 
-        if ($parameters instanceof \stdClass) {
-            $parameters = get_object_vars($parameters);
-        }
+        foreach ($parameters as $property => $value) {
+            $property = static::convertToCamelCase($property);
 
-        // Dynamically add additional fields
-        if(array_key_exists('_fields', $parameters)) {
-            foreach($parameters['_fields'] as $field) {
-
-                $property = static::convertToCamelCase($field);
-
-                if(!property_exists($this, $property)) {
-                    $this->$property = null;
-                }
-
+            if (property_exists($this, $property)) {
+                $this->setProperty($property, $value);
             }
         }
-
-        $this->build($parameters);
     }
 
     /**

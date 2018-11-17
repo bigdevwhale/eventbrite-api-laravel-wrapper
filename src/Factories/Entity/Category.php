@@ -19,9 +19,4 @@ class Category extends AbstractEntity
      * @var string
      */
     public $shortName;
-
-    /**
-     * @var Subcategory[]
-     */
-    public $subcategories;
 }

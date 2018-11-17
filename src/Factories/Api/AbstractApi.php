@@ -1,8 +1,8 @@
 <?php
 
 namespace Marat555\Eventbrite\Factories\Api;
-use Marat555\Eventbrite\Factories\Client;
 
+use Marat555\Eventbrite\Factories\Client;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -33,27 +33,6 @@ abstract class AbstractApi
      * @var string
      */
     protected $endpoint;
-
-    /**
-     * Optional scope to apply
-     *
-     * @var string
-     */
-    protected $scope;
-
-    /**
-     * Additional fields for entity to make available
-     *
-     * @var array
-     */
-    protected $fields = [];
-
-    /**
-     * Additional endpoints to load with this request
-     *
-     * @var array
-     */
-    protected $with = [];
 
     /**
      * Filters to apply to this request
@@ -89,7 +68,7 @@ abstract class AbstractApi
         // Convert to entityClass
         return array_map(function ($object) {
             return $this->instantiateEntity($object);
-        }, $objects->data);
+        }, $objects->{$this->endpoint});
 
     }
 
@@ -202,15 +181,7 @@ abstract class AbstractApi
      */
     public function instantiateEntity($params)
     {
-
-        // Modify params so the class builder knows what was included via with()
-        $params->_with = $this->with;
-
-        $params->_fields = $this->fields;
-
-        // Instantiate new entity class
         return new $this->class($params);
-
     }
 
     /**
@@ -220,7 +191,7 @@ abstract class AbstractApi
      */
     public function getEndpoint()
     {
-        return $this->scope . $this->endpoint;
+        return $this->endpoint;
     }
 
 }

@@ -52,10 +52,12 @@ class ErrorHandler {
 
     public function handleErrorResponse(ResponseInterface $response)
     {
-
         $eventbrite = json_decode($response->getBody()->getContents());
 
-        switch(str_replace(' ', '', $eventbrite->code)) {
+        throw new \Exception(json_encode($eventbrite));
+        switch($eventbrite->error) {
+            case "INVALID_AUTH":
+                throw new UnauthorizedException($eventbrite->error_description, $eventbrite->status_code);
             case "Unauthorized":
                 throw new UnauthorizedException($eventbrite->message, $eventbrite->status);
             case "PermissionDenied":
@@ -105,7 +107,7 @@ class ErrorHandler {
             case "ClusterUnavailable":
                 throw new ClusterUnavailableException($eventbrite->message, $eventbrite->status);
             default:
-                throw new EventbriteErrorException($eventbrite->message ? $eventbrite->message : $eventbrite->eventbrite->code, $eventbrite->status);
+                throw new EventbriteErrorException($eventbrite->error_description ? $eventbrite->error_description : $eventbrite->eventbrite->code, $eventbrite->status_code);
 
         }
 

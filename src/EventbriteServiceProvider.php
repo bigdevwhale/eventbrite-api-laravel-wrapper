@@ -41,7 +41,7 @@ class EventbriteServiceProvider extends ServiceProvider {
     {
         $this->app->singleton('eventbrite', function ($app) {
             $config = $app['config']->get('eventbrite');
-            $client = new Client($config['baseUrl'], $config['token'], $config['secret']);
+            $client = new Client($config['baseUrl'], $config['token']);
             return new Eventbrite($client);
         });
 
