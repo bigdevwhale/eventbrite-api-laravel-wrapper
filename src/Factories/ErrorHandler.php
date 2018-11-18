@@ -3,6 +3,15 @@
 namespace Marat555\Eventbrite\Factories;
 
 use Illuminate\Http\Response;
+use Marat555\Eventbrite\Exceptions\BadPageException;
+use Marat555\Eventbrite\Exceptions\ExpansionFailedException;
+use Marat555\Eventbrite\Exceptions\HitRateLimitException;
+use Marat555\Eventbrite\Exceptions\InternalErrorException;
+use Marat555\Eventbrite\Exceptions\InvalidAuthException;
+use Marat555\Eventbrite\Exceptions\InvalidAuthHeaderException;
+use Marat555\Eventbrite\Exceptions\InvalidBatchException;
+use Marat555\Eventbrite\Exceptions\NoAuthException;
+use Marat555\Eventbrite\Exceptions\NotAuthorizedException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Marat555\Eventbrite\Exceptions\NotFoundException;
@@ -50,62 +59,38 @@ class ErrorHandler {
         return $response->getStatusCode() < Response::HTTP_BAD_REQUEST;
     }
 
+    /**
+     * @param ResponseInterface $response
+     * @throws EventbriteErrorException
+     * @throws Exception
+     */
     public function handleErrorResponse(ResponseInterface $response)
     {
         $eventbrite = json_decode($response->getBody()->getContents());
 
-        throw new \Exception(json_encode($eventbrite));
         switch($eventbrite->error) {
             case "INVALID_AUTH":
-                throw new UnauthorizedException($eventbrite->error_description, $eventbrite->status_code);
-            case "Unauthorized":
-                throw new UnauthorizedException($eventbrite->message, $eventbrite->status);
-            case "PermissionDenied":
-                throw new PermissionDeniedException($eventbrite->message, $eventbrite->status);
-            case "NotFound":
-                throw new NotFoundException($eventbrite->message, $eventbrite->status);
-            case "MethodNotAllowed":
-                throw new MethodNotAllowedException($eventbrite->message, $eventbrite->status);
-            case "InvalidDateFormat":
-                throw new InvalidDateFormatException($eventbrite->message, $eventbrite->status);
-            case "InvalidFormat":
-                throw new InvalidFormatException(property_exists($eventbrite, 'fieldName') ? "Invalid format for {$eventbrite->fieldName}" : "Invalid format", $eventbrite->status);
-            case "InvalidReference":
-                throw new InvalidReferenceException(property_exists($eventbrite, 'fieldName') ? "Invalid reference for {$eventbrite->fieldName}" : "Invalid reference", $eventbrite->status);
-            case "NotNullable":
-                throw new NotNullableException("{$eventbrite->fieldName} must be set", $eventbrite->status);
-            case "NotUnique":
-                throw new NotUniqueException("{$eventbrite->fieldName} is not unique", $eventbrite->status);
-            case "MinLimitExceeded":
-                throw new MinLimitExceededException("{$eventbrite->fieldName} is too small", $eventbrite->status);
-            case "MaxLimitExceeded":
-                throw new MaxLimitExceededException("{$eventbrite->fieldName} is too long", $eventbrite->status);
-            case "MinLengthExceeded":
-                throw new MinLengthExceededException("{$eventbrite->fieldName} is not long enough", $eventbrite->status);
-            case "MaxLengthExceeded":
-                throw new MaxLengthExceededException("{$eventbrite->fieldName} is too long", $eventbrite->status);
-            case "InvalidOption":
-                throw new InvalidOptionException("{$eventbrite->fieldName} is not a valid option", $eventbrite->status);
-            case "InvalidCharacters":
-                throw new InvalidCharactersException("{$eventbrite->fieldName} contains invalid characters", $eventbrite->status);
-            case "MissingRequired":
-                throw new MissingRequiredException("{$eventbrite->fieldName} is required", $eventbrite->status);
-            case "InvalidCSRFToken":
-                throw new InvalidCSRFTokenException("Invalid CSRF Token", $eventbrite->status);
-            case "InvalidAction":
-                throw new InvalidActionException("Invalid action", $eventbrite->status);
-            case "InvalidBodyContent":
-                throw new InvalidBodyContentException("Invalid body content", $eventbrite->status);
-            case "InvalidType":
-                throw new InvalidTypeException("Invalid type exception", $eventbrite->status);
-            case "ActionNotAvailable":
-                throw new ActionNotAvailableException($eventbrite->message ? $eventbrite->message : "This action is not currently available", $eventbrite->status);
-            case "InvalidState":
-                throw new InvalidStateException($eventbrite->message ? $eventbrite->message : "Invalid state", $eventbrite->status);
-            case "ServerError":
-                throw new ServerErrorException($eventbrite->message, $eventbrite->status);
-            case "ClusterUnavailable":
-                throw new ClusterUnavailableException($eventbrite->message, $eventbrite->status);
+                throw new InvalidAuthException($eventbrite->error_description, $eventbrite->status_code);
+            case "NOT_FOUND":
+                throw new NotFoundException($eventbrite->error_description, $eventbrite->status_code);
+            case "INVALID_AUTH_HEADER":
+                throw new InvalidAuthHeaderException($eventbrite->error_description, $eventbrite->status_code);
+            case "NO_AUTH":
+                throw new NoAuthException($eventbrite->error_description, $eventbrite->status_code);
+            case "BAD_PAGE":
+                throw new BadPageException($eventbrite->error_description, $eventbrite->status_code);
+            case "NOT_AUTHORIZED":
+                throw new NotAuthorizedException($eventbrite->error_description, $eventbrite->status_code);
+            case "METHOD_NOT_ALLOWED":
+                throw new MethodNotAllowedException($eventbrite->error_description, $eventbrite->status_code);
+            case "HIT_RATE_LIMIT":
+                throw new HitRateLimitException($eventbrite->error_description, $eventbrite->status_code);
+            case "INTERNAL_ERROR":
+                throw new InternalErrorException($eventbrite->error_description, $eventbrite->status_code);
+            case "EXPANSION_FAILED":
+                throw new ExpansionFailedException($eventbrite->error_description, $eventbrite->status_code);
+            case "INVALID_BATCH":
+                throw new InvalidBatchException($eventbrite->error_description, $eventbrite->status_code);
             default:
                 throw new EventbriteErrorException($eventbrite->error_description ? $eventbrite->error_description : $eventbrite->eventbrite->code, $eventbrite->status_code);
 

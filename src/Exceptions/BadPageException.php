@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class NoAuthException extends EventbriteErrorException
+class BadPageException extends EventbriteErrorException
 {
     //
 }

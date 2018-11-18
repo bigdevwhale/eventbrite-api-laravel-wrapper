@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class InvalidAuthHeaderException extends EventbriteErrorException
+class MethodNotAllowedException extends EventbriteErrorException
 {
     //
 }

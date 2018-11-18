@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class MethodNotAllowedException extends EventbriteErrorException
+class HitRateLimitException extends EventbriteErrorException
 {
     //
 }
