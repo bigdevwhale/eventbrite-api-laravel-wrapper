@@ -53,7 +53,7 @@ class Client implements ClientInterface {
      */
     private function prepareData($params = [], $options = [])
     {
-        if(array_get($options, 'content_type') == "json") {
+        if (array_get($options, 'content_type') == "json") {
             $data['json'] = $params; // pass data as array which gets json_encoded
         } else {
             $data['query'] = $this->prepareQueryString($params); // pass data as query string

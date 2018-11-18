@@ -68,7 +68,7 @@ class ErrorHandler {
     {
         $eventbrite = json_decode($response->getBody()->getContents());
 
-        switch($eventbrite->error) {
+        switch ($eventbrite->error) {
             case "INVALID_AUTH":
                 throw new InvalidAuthException($eventbrite->error_description, $eventbrite->status_code);
             case "NOT_FOUND":

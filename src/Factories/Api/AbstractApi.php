@@ -159,7 +159,7 @@ abstract class AbstractApi
 
         // No filter has been applied to this request.
         // Standard request, instantiate a single object.
-        if(empty($this->filter)) {
+        if (empty($this->filter)) {
             return $this->instantiateEntity($response);
         }
 
