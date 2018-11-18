@@ -2,7 +2,7 @@
 
 namespace Marat555\Eventbrite\Exceptions;
 
-class NotUniqueException extends EventbriteErrorException
+class InvalidAuthException extends EventbriteErrorException
 {
     //
 }
