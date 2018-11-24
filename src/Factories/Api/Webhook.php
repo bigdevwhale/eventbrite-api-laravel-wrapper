@@ -28,21 +28,15 @@ class Webhook extends AbstractApi implements \Marat555\Eventbrite\Contracts\Api\
     protected $endpoint = "webhooks";
 
     /**
-     * Send create request to API
-     *
-     * @param \Marat555\Eventbrite\Factories\Entity\Webhook $webhook
-     * @return \Marat555\Eventbrite\Factories\Entity\Webhook
+     * {@inheritdoc}
      */
-    public function create(\Marat555\Eventbrite\Factories\Entity\Webhook $webhook)
+    public function create(WebhookEntity $webhook)
     {
         // TODO: Implement create() method.
     }
 
     /**
-     * Delete a webhook
-     *
-     * @param $id
-     * @return \Marat555\Eventbrite\Factories\Entity\Webhook
+     * {@inheritdoc}
      */
     public function delete($id)
     {
