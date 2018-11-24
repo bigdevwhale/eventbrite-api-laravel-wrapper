@@ -5,6 +5,7 @@ namespace Marat555\Eventbrite;
 use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\Api\Category;
 use Marat555\Eventbrite\Factories\Api\Subcategory;
+use Marat555\Eventbrite\Factories\Api\Webhook;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -40,5 +41,13 @@ class Eventbrite {
     public function subcategory()
     {
         return new Subcategory($this->client);
+    }
+
+    /**
+     * @return Webhook
+     */
+    public function webhook()
+    {
+        return new Webhook($this->client);
     }
 }
