@@ -40,12 +40,12 @@ use Marat555\Eventbrite\Exceptions\ActionNotAvailableException;
 use Marat555\Eventbrite\Exceptions\ClusterUnavailableException;
 use Marat555\Eventbrite\Exceptions\InvalidBodyContentException;
 
-class ErrorHandler {
-
+class ErrorHandler
+{
     public function __invoke(callable $handler)
     {
         return function (RequestInterface $request, array $options) use ($handler) {
-            return $handler($request, $options)->then(function($response) {
+            return $handler($request, $options)->then(function ($response) {
                 if ($this->isSuccessful($response)) {
                     return $response;
                 }
@@ -95,7 +95,5 @@ class ErrorHandler {
                 throw new EventbriteErrorException($eventbrite->error_description ? $eventbrite->error_description : $eventbrite->eventbrite->code, $eventbrite->status_code);
 
         }
-
     }
-
 }

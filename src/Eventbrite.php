@@ -13,8 +13,8 @@ use Marat555\Eventbrite\Factories\Api\Webhook;
  * @package  Eventbrite
  * @author   @marat555
  */
-class Eventbrite {
-
+class Eventbrite
+{
     public $client;
 
     public function __construct(Client $client)

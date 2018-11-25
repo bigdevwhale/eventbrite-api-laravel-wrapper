@@ -56,7 +56,6 @@ abstract class AbstractEntity
      */
     public function setProperty($property, $value)
     {
-
         $this->$property = $value;
 
 
@@ -64,7 +63,6 @@ abstract class AbstractEntity
 
         // We've got an array, lets see if we can instantiate an entity
         if (is_array($value) && !empty($value) && is_object(head($value))) {
-
             $array = $value; // for clarity, call it what it is
 
             // We can only guess at what the entity might be if we have the `type`
@@ -74,23 +72,21 @@ abstract class AbstractEntity
                 $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . ucfirst(head($array)->type);
 
                 // Update each element of the array to have the instantiated entity
-                if (class_exists($class)) foreach($array as $key => $value) {
+                if (class_exists($class)) {
+                    foreach ($array as $key => $value) {
 
                     // Update the array with the entity
-                    $array[$key] = new $class($value);
-
+                        $array[$key] = new $class($value);
+                    }
                 }
 
                 // Update the property with the array of entities
                 $this->$property = $array;
-
             }
-
         }
 
         // We've got an object, see if we can instantiate that into an entity
-        else if (gettype($value) == "object") {
-
+        elseif (gettype($value) == "object") {
             if (property_exists($value, 'type')) {
 
                 // Get the class of the new entity we want to instantiate
@@ -100,10 +96,8 @@ abstract class AbstractEntity
                 if (class_exists($class)) {
                     $this->$property = new $class($value);
                 }
-
             }
         }
-
     }
 
     /**
@@ -115,7 +109,6 @@ abstract class AbstractEntity
      */
     public function instantiateEntity(array $parameters)
     {
-
     }
 
 
@@ -147,5 +140,4 @@ abstract class AbstractEntity
         }
         return $result;
     }
-
 }

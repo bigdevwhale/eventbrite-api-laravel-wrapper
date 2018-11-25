@@ -69,7 +69,6 @@ abstract class AbstractApi
         return array_map(function ($object) {
             return $this->instantiateEntity($object);
         }, $objects->{$this->endpoint});
-
     }
 
     /**
@@ -90,7 +89,6 @@ abstract class AbstractApi
 
         // Handle response
         return $this->handleResponse(json_decode($response));
-
     }
 
     /**
@@ -155,7 +153,8 @@ abstract class AbstractApi
      * @param $response
      * @return array
      */
-    public function handleResponse($response) {
+    public function handleResponse($response)
+    {
 
         // No filter has been applied to this request.
         // Standard request, instantiate a single object.
@@ -170,7 +169,6 @@ abstract class AbstractApi
                 return $this->instantiateEntity($object);
             }, $response->data);
         }
-
     }
 
     /**
@@ -193,5 +191,4 @@ abstract class AbstractApi
     {
         return $this->endpoint;
     }
-
 }

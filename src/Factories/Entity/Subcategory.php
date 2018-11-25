@@ -14,7 +14,7 @@ class Subcategory extends AbstractEntity
 
     /**
      * The category this belongs to
-     * 
+     *
      * @var Category
      */
     public $parentCategory;

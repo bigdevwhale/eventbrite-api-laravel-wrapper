@@ -8,7 +8,8 @@ namespace Marat555\Eventbrite\Contracts;
  * @package  Eventbrite
  * @author   @marat555
  */
-interface Client {
+interface Client
+{
 
     /**
      * @param $endPoint
@@ -23,5 +24,4 @@ interface Client {
      * @return mixed
      */
     public function post($endPoint, array $params = []);
-
 }

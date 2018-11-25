@@ -8,7 +8,8 @@ namespace Marat555\Eventbrite\Contracts\Api;
  * @package  Eventbrite
  * @author   @marat555
  */
-interface Webhook {
+interface Webhook
+{
     
     /**
      * {@inheritdoc}

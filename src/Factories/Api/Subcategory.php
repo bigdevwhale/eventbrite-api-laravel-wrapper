@@ -27,5 +27,4 @@ class Subcategory extends AbstractApi implements SubcategoryInterface
      * @var string
      */
     protected $endpoint = "subcategories";
-
 }

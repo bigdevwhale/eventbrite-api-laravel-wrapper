@@ -5,7 +5,8 @@ namespace Marat555\Eventbrite;
 use Illuminate\Support\ServiceProvider;
 use Marat555\Eventbrite\Factories\Client;
 
-class EventbriteServiceProvider extends ServiceProvider {
+class EventbriteServiceProvider extends ServiceProvider
+{
     /**
      * Perform post-registration booting of services.
      *
@@ -46,6 +47,5 @@ class EventbriteServiceProvider extends ServiceProvider {
         });
 
         $this->app->alias('eventbrite', 'Marat555\Eventbrite\Eventbrite');
-
     }
 }

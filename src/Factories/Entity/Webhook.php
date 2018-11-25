@@ -21,7 +21,7 @@ class Webhook extends AbstractEntity
 
     /**
      * One or any combination of actions that will cause this webhook to fire
-     * 
+     *
      * @var string
      */
     public $actions;

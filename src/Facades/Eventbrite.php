@@ -4,7 +4,8 @@ namespace Marat555\Eventbrite\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Eventbrite extends Facade {
+class Eventbrite extends Facade
+{
 
     /**
      * Get the registered name of the component.

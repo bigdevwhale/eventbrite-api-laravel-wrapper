@@ -27,5 +27,4 @@ class Category extends AbstractApi implements CategoryInterface
      * @var string
      */
     protected $endpoint = "categories";
-
 }

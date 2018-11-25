@@ -12,7 +12,8 @@ use \Marat555\Eventbrite\Contracts\Client as ClientInterface;
  * @package  Eventbrite
  * @author   @marat555
  */
-class Client implements ClientInterface {
+class Client implements ClientInterface
+{
 
     /**
      * @var HttpClient
@@ -31,7 +32,6 @@ class Client implements ClientInterface {
      */
     public function __construct($baseUrl, $token)
     {
-
         $stack = HandlerStack::create();
 
         $stack->push(new ErrorHandler);
@@ -83,8 +83,7 @@ class Client implements ClientInterface {
     {
         $params += ['token' => $this->token];
         $response = $this->client->get($endPoint, $this->prepareData($params));
-        switch ($response->getHeader('content-type'))
-        {
+        switch ($response->getHeader('content-type')) {
             case "application/json":
                 return $response->json();
                 break;
@@ -104,8 +103,7 @@ class Client implements ClientInterface {
     {
         $options += ['headers' => ['Authorization' => "Bearer $this->token"]];
         $response = $this->client->post($endPoint, $this->prepareData($params, $options));
-        switch ($response->getHeader('content-type'))
-        {
+        switch ($response->getHeader('content-type')) {
             case "application/json":
                 return $response->json();
                 break;
@@ -124,8 +122,7 @@ class Client implements ClientInterface {
     public function put($endPoint, array $params = [], array $options = [])
     {
         $response = $this->client->put($endPoint, $this->prepareData($params, $options));
-        switch ($response->getHeader('content-type'))
-        {
+        switch ($response->getHeader('content-type')) {
             case "application/json":
                 return $response->json();
                 break;
@@ -144,8 +141,7 @@ class Client implements ClientInterface {
     public function delete($endPoint, array $params = [], array $options = [])
     {
         $response = $this->client->delete($endPoint, $this->prepareData($params, $options));
-        switch ($response->getHeader('content-type'))
-        {
+        switch ($response->getHeader('content-type')) {
             case "application/json":
                 return $response->json();
                 break;
@@ -153,6 +149,4 @@ class Client implements ClientInterface {
                 return $response->getBody()->getContents();
         }
     }
-
 }
-
