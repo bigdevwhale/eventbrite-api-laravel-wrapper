@@ -3,6 +3,7 @@
 namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Entity\SubCategory as SubcategoryEntity;
+use Marat555\Eventbrite\Contracts\Api\Subcategory as SubcategoryInterface;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -10,7 +11,7 @@ use Marat555\Eventbrite\Factories\Entity\SubCategory as SubcategoryEntity;
  * @package  Eventbrite
  * @author   @marat555
  */
-class Subcategory extends AbstractApi implements \Marat555\Eventbrite\Contracts\Api\Subcategory
+class Subcategory extends AbstractApi implements SubcategoryInterface
 {
 
     /**

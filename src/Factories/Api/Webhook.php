@@ -3,6 +3,7 @@
 namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Entity\Webhook as WebhookEntity;
+use Marat555\Eventbrite\Contracts\Api\Webhook as WebhookInterface;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -10,13 +11,13 @@ use Marat555\Eventbrite\Factories\Entity\Webhook as WebhookEntity;
  * @package  Eventbrite
  * @author   @marat555
  */
-class Webhook extends AbstractApi implements \Marat555\Eventbrite\Contracts\Api\Webhook
+class Webhook extends AbstractApi implements WebhookInterface
 {
 
     /**
      * The class of the entity we are working with
      *
-     * @var CategoryEntity
+     * @var WebhookEntity
      */
     protected $class = WebhookEntity::class;
 
@@ -29,17 +30,36 @@ class Webhook extends AbstractApi implements \Marat555\Eventbrite\Contracts\Api\
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function create(WebhookEntity $webhook)
     {
-        // TODO: Implement create() method.
+        // Data
+        $data = $webhook->toArray();
+
+        // Send "create" request
+        $webhook = $this->client->post($this->getEndpoint(), $data, ['content_type' => 'json']);
+
+        // Parse response
+        $webhook = json_decode($webhook);
+
+        // Create WebhookEntity from response
+        return new WebhookEntity($webhook);
     }
 
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
     public function delete($id)
     {
-        // TODO: Implement delete() method.
+        /// Send delete request
+        $webhook = $this->client->delete($this->getEndpoint()."/".$id);
+
+        // Parse response
+        $webhook = json_decode($webhook);
+
+        // Create WebhookEntity from response
+        return new WebhookEntity($webhook);
     }
 }

@@ -81,7 +81,7 @@ class Client implements ClientInterface {
      */
     public function get($endPoint, array $params = [])
     {
-        $params += ["token" => $this->token];
+        $params += ['token' => $this->token];
         $response = $this->client->get($endPoint, $this->prepareData($params));
         switch ($response->getHeader('content-type'))
         {
@@ -102,6 +102,7 @@ class Client implements ClientInterface {
      */
     public function post($endPoint, array $params = [], array $options = [])
     {
+        $options += ['headers' => ['Authorization' => "Bearer $this->token"]];
         $response = $this->client->post($endPoint, $this->prepareData($params, $options));
         switch ($response->getHeader('content-type'))
         {
