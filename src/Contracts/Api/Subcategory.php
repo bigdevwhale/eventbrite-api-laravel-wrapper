@@ -9,8 +9,7 @@ namespace Marat555\Eventbrite\Contracts\Api;
  * @author   @marat555
  */
 interface Subcategory {
-
-
+    
     /**
      * {@inheritdoc}
      */
