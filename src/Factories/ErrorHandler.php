@@ -3,6 +3,11 @@
 namespace Marat555\Eventbrite\Factories;
 
 use Illuminate\Http\Response;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Marat555\Eventbrite\Exceptions\NotFoundException;
+use Marat555\Eventbrite\Exceptions\EventbriteErrorException;
+use Marat555\Eventbrite\Exceptions\MethodNotAllowedException;
 use Marat555\Eventbrite\Exceptions\BadPageException;
 use Marat555\Eventbrite\Exceptions\ExpansionFailedException;
 use Marat555\Eventbrite\Exceptions\HitRateLimitException;
@@ -12,33 +17,6 @@ use Marat555\Eventbrite\Exceptions\InvalidAuthHeaderException;
 use Marat555\Eventbrite\Exceptions\InvalidBatchException;
 use Marat555\Eventbrite\Exceptions\NoAuthException;
 use Marat555\Eventbrite\Exceptions\NotAuthorizedException;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
-use Marat555\Eventbrite\Exceptions\NotFoundException;
-use Marat555\Eventbrite\Exceptions\NotUniqueException;
-use Marat555\Eventbrite\Exceptions\ServerErrorException;
-use Marat555\Eventbrite\Exceptions\InvalidTypeException;
-use Marat555\Eventbrite\Exceptions\NotNullableException;
-use Marat555\Eventbrite\Exceptions\InvalidStateException;
-use Marat555\Eventbrite\Exceptions\EventbriteErrorException;
-use Marat555\Eventbrite\Exceptions\UnauthorizedException;
-use Marat555\Eventbrite\Exceptions\InvalidActionException;
-use Marat555\Eventbrite\Exceptions\InvalidFormatException;
-use Marat555\Eventbrite\Exceptions\InvalidOptionException;
-use Marat555\Eventbrite\Exceptions\MissingRequiredException;
-use Marat555\Eventbrite\Exceptions\MaxLimitExceededException;
-use Marat555\Eventbrite\Exceptions\MethodNotAllowedException;
-use Marat555\Eventbrite\Exceptions\InvalidReferenceException;
-use Marat555\Eventbrite\Exceptions\InvalidCSRFTokenException;
-use Marat555\Eventbrite\Exceptions\MinLimitExceededException;
-use Marat555\Eventbrite\Exceptions\PermissionDeniedException;
-use Marat555\Eventbrite\Exceptions\InvalidDateFormatException;
-use Marat555\Eventbrite\Exceptions\MaxLengthExceededException;
-use Marat555\Eventbrite\Exceptions\InvalidCharactersException;
-use Marat555\Eventbrite\Exceptions\MinLengthExceededException;
-use Marat555\Eventbrite\Exceptions\ActionNotAvailableException;
-use Marat555\Eventbrite\Exceptions\ClusterUnavailableException;
-use Marat555\Eventbrite\Exceptions\InvalidBodyContentException;
 
 class ErrorHandler
 {
