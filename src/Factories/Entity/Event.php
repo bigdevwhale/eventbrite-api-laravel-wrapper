@@ -2,6 +2,12 @@
 
 namespace Marat555\Eventbrite\Factories\Entity;
 
+/**
+ * Class Event
+ * @package Marat555\Eventbrite\Factories\Entity
+ *
+ *
+ */
 class Event extends AbstractEntity
 {
 
@@ -32,6 +38,13 @@ class Event extends AbstractEntity
      * @var string
      */
     public $start;
+
+    /**
+     * The vanity URL to the event page for this event on Eventbrite
+     *
+     * @var string
+     */
+    public $vanity_url;
 
     /**
      * Event end date and time
@@ -73,7 +86,56 @@ class Event extends AbstractEntity
      *
      * @var boolean
      */
-    public $online_event;
+    public $onlineEvent;
+
+    /**
+     * ID of the event organizer
+     *
+     * @var string
+     */
+    public $organizerId;
+
+    /**
+     * Organization owning the event
+     *
+     * @var string
+     */
+    public $organizationId;
+
+    /**
+     * Image ID of the event logo
+     *
+     * @var string
+     */
+    public $logoId;
+
+    /**
+     * Event venue ID
+     *
+     * @var string
+     */
+    public $venueId;
+
+    /**
+     * Event format (Expansion: format)
+     *
+     * @var string
+     */
+    public $formatId;
+
+    /**
+     * Event category (Expansion: category)
+     *
+     * @var string
+     */
+    public $categoryId;
+
+    /**
+     * Event subcategory (Expansion: subcategory)
+     *
+     * @var string
+     */
+    public $subcategoryId;
 
     /**
      * true = Allows the Event to be publicly searchable on the Eventbrite website
@@ -94,14 +156,14 @@ class Event extends AbstractEntity
      *
      * @var boolean
      */
-    public $invite_only;
+    public $inviteOnly;
 
     /**
      * true = Provides, to Eventbrite applications, the total number of remaining tickets for the Event
      *
      * @var boolean
      */
-    public $show_remaining;
+    public $showRemaining;
 
     /**
      * Event password used by visitors to access the details of the Event
@@ -124,5 +186,105 @@ class Event extends AbstractEntity
      *
      * @var boolean
      */
-    public $capacity_is_custom;
+    public $capacityIsCustom;
+
+    /**
+     * Maximum duration (in seconds) of a transaction
+     *
+     * @var string
+     */
+    public $txTimeLimit;
+
+    /**
+     * Shows when event starts
+     *
+     * @var boolean
+     */
+    public $hideStartDate;
+
+    /**
+     * Hide when event starts
+     *
+     * @var boolean
+     */
+    public $hideEndDate;
+
+    /**
+     * The event Locale
+     *
+     * @var string
+     */
+    public $locale;
+
+    /**
+     * @var boolean
+     */
+    public $isLocked;
+
+    /**
+     * @var boolean
+     */
+    public $privacySetting;
+
+    /**
+     * @var boolean
+     */
+    public $isSeries;
+
+    /**
+     * @var boolean
+     */
+    public $isSeriesParent;
+
+    /**
+     * Enables to show pick a seat option
+     *
+     * @var boolean
+     */
+    public $showPickASeat;
+
+    /**
+     * If the events has been set to have reserved seatings
+     *
+     * @var boolean
+     */
+    public $isReservedSeating;
+
+    /**
+     * Enables to show seatmap thumbnail
+     *
+     * @var boolean
+     */
+    public $showSeatmapThumbnail;
+
+    /**
+     * For reserved seating event, if venue map thumbnail should have colors on the event page
+     *
+     * @var boolean
+     */
+    public $showColorsInSeatmapThumbnail;
+
+    /**
+     * Allows to set a free event
+     *
+     * @var boolean
+     */
+    public $isFree;
+
+    /**
+     * Source of the event (defaults to API)
+     *
+     * @var string
+     */
+    public $source;
+
+    /**
+     * @var string
+     */
+    public $version;
+
+    /**
+     * @var string
+     */
+    public $resourceUri;
 }

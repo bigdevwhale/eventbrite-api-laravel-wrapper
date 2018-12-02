@@ -35,11 +35,12 @@ abstract class AbstractApi
     protected $endpoint;
 
     /**
-     * Filters to apply to this request
+     * Information from expansions fields are not normally returned when requesting information.
+     * To receive this information in a request, expand the request
      *
      * @var array
      */
-    protected $filter = [];
+    protected $expansion = [];
 
     /**
      * Inject API Client
@@ -92,42 +93,14 @@ abstract class AbstractApi
     }
 
     /**
-     * Define additional fields for entity to dynamically expose.
+     * Add expansion to request
      *
-     * Use this to enable access properties that are
-     * not explicitly defined by the entity
-     *
-     * @var array
-     * @return $this
-     */
-    public function fields($fields)
-    {
-        $this->fields = array_merge($this->fields, $fields);
-        return $this;
-    }
-
-    /**
-     * Define the endpoints to load
-     *
-     * @var array
-     * @return $this
-     */
-    public function with($relations)
-    {
-        $this->with = $relations;
-        $this->fields = array_merge($this->fields, $this->with);
-        return $this;
-    }
-
-    /**
-     * Apply a filter to apply on request
-     *
-     * @param $filter
+     * @param $expansion
      * @return mixed
      */
-    public function filter($filter)
+    public function expand($expansion)
     {
-        $this->filter = $filter;
+        $this->expansion = $expansion;
         return $this;
     }
 
@@ -138,10 +111,7 @@ abstract class AbstractApi
      */
     public function prepareParams()
     {
-        return array_merge(
-            ['include' => $this->with],
-            $this->filter
-        );
+        return ['expand' => $this->expansion];
     }
 
     /**
