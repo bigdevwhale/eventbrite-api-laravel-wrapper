@@ -6,6 +6,13 @@ class Subcategory extends AbstractEntity
 {
 
     /**
+     * Subcategory ID
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
      * The subcategory name
      *
      * @var string
@@ -18,4 +25,9 @@ class Subcategory extends AbstractEntity
      * @var Category
      */
     public $parentCategory;
+
+    /**
+     * @var string
+     */
+    public $resourceUri;
 }
