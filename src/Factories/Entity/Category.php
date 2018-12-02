@@ -6,6 +6,13 @@ class Category extends AbstractEntity
 {
 
     /**
+     * Category ID
+     *
+     * @var string
+     */
+    public $id;
+
+    /**
      * The category name
      *
      * @var string
@@ -25,4 +32,16 @@ class Category extends AbstractEntity
      * @var string
      */
     public $shortName;
+
+    /**
+     * Translated short category name
+     *
+     * @var string
+     */
+    public $shortNameLocalized;
+
+    /**
+     * @var string
+     */
+    public $resourceUri;
 }
