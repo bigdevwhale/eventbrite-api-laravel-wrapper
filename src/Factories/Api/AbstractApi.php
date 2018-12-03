@@ -3,6 +3,8 @@
 namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Client;
+use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
+use Marat555\Eventbrite\Factories\HelperEntity\Pagination;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -35,11 +37,19 @@ abstract class AbstractApi
     protected $endpoint;
 
     /**
-     * Filters to apply to this request
+     * Pagination property name
+     *
+     * @var string
+     */
+    protected $pagination = "pagination";
+
+    /**
+     * Information from expansions fields are not normally returned when requesting information.
+     * To receive this information in a request, expand the request
      *
      * @var array
      */
-    protected $filter = [];
+    protected $expansion = [];
 
     /**
      * Inject API Client
@@ -59,16 +69,22 @@ abstract class AbstractApi
      */
     public function all()
     {
-        // Get all objects from Eventbrite API
-        $objects = $this->client->get($this->getEndpoint(), $this->prepareParams());
+        $objects = null;
+        $pagination = null;
+        $response = $this->client->get($this->getEndpoint(), $this->prepareParams());
+        $response = json_decode($response);
 
-        // Decode the json response
-        $objects = json_decode($objects);
+        if (property_exists($response, "$this->endpoint")) {
+            $objects = array_map(function ($object) {
+                return $this->instantiateEntity($object);
+            }, $response->{$this->endpoint});
+        }
 
-        // Convert to entityClass
-        return array_map(function ($object) {
-            return $this->instantiateEntity($object);
-        }, $objects->{$this->endpoint});
+        if (property_exists($response, "$this->pagination")) {
+            $pagination = new Pagination($response->{$this->pagination});
+        }
+
+        return new ObjectList($pagination, $objects);
     }
 
     /**
@@ -92,42 +108,14 @@ abstract class AbstractApi
     }
 
     /**
-     * Define additional fields for entity to dynamically expose.
+     * Add expansion to request
      *
-     * Use this to enable access properties that are
-     * not explicitly defined by the entity
-     *
-     * @var array
-     * @return $this
-     */
-    public function fields($fields)
-    {
-        $this->fields = array_merge($this->fields, $fields);
-        return $this;
-    }
-
-    /**
-     * Define the endpoints to load
-     *
-     * @var array
-     * @return $this
-     */
-    public function with($relations)
-    {
-        $this->with = $relations;
-        $this->fields = array_merge($this->fields, $this->with);
-        return $this;
-    }
-
-    /**
-     * Apply a filter to apply on request
-     *
-     * @param $filter
+     * @param $expansion
      * @return mixed
      */
-    public function filter($filter)
+    public function expand($expansion)
     {
-        $this->filter = $filter;
+        $this->expansion = $expansion;
         return $this;
     }
 
@@ -138,10 +126,7 @@ abstract class AbstractApi
      */
     public function prepareParams()
     {
-        return array_merge(
-            ['include' => $this->with],
-            $this->filter
-        );
+        return ['expand' => $this->expansion];
     }
 
     /**

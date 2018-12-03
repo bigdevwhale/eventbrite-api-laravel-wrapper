@@ -6,6 +6,7 @@ use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\Api\Category;
 use Marat555\Eventbrite\Factories\Api\Subcategory;
 use Marat555\Eventbrite\Factories\Api\Webhook;
+use Marat555\Eventbrite\Factories\Api\Event;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -49,5 +50,13 @@ class Eventbrite
     public function webhook()
     {
         return new Webhook($this->client);
+    }
+
+    /**
+     * @return Event
+     */
+    public function event()
+    {
+        return new Event($this->client);
     }
 }
