@@ -29,19 +29,30 @@ class Event extends AbstractApi implements EventInterface
     protected $endpoint = "events";
 
     /**
+     * The Eventbrite API subendpoint
+     *
+     * @var string
+     */
+    protected $subEndpoint = "organizations";
+
+    /**
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function create(EventEntity $event)
+    public function create(int $organizerId, EventEntity $event)
     {
-        // Data
-        $data = $event->toArray();
+        $data["event"] = $event->toArray();
+        $endpoint = "$this->subEndpoint/$organizerId/$this->endpoint";
 
         // Send "create" request
-        $event = $this->client->post($this->getEndpoint(), $data, ['content_type' => 'json']);
+        $event = $this->client->post($endpoint, $data, ['content_type' => 'json']);
 
         // Parse response
         $event = json_decode($event);
+
+        if (property_exists($event, $this->endpoint)) {
+            $event = $event->{$this->endpoint}[0];
+        }
 
         // Create WebhookEntity from response
         return new EventEntity($event);

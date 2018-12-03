@@ -12,7 +12,7 @@ use Marat555\Eventbrite\Factories\Entity\Event as EventEntity;
  */
 interface Event
 {
-    
+
     /**
      * {@inheritdoc}
      */
