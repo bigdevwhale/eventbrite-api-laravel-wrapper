@@ -3,6 +3,8 @@
 namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Client;
+use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
+use Marat555\Eventbrite\Factories\HelperEntity\Pagination;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -35,6 +37,13 @@ abstract class AbstractApi
     protected $endpoint;
 
     /**
+     * Pagination property name
+     *
+     * @var string
+     */
+    protected $pagination = "pagination";
+
+    /**
      * Information from expansions fields are not normally returned when requesting information.
      * To receive this information in a request, expand the request
      *
@@ -60,16 +69,22 @@ abstract class AbstractApi
      */
     public function all()
     {
-        // Get all objects from Eventbrite API
-        $objects = $this->client->get($this->getEndpoint(), $this->prepareParams());
+        $objects = null;
+        $pagination = null;
+        $response = $this->client->get($this->getEndpoint(), $this->prepareParams());
+        $response = json_decode($response);
 
-        // Decode the json response
-        $objects = json_decode($objects);
+        if (property_exists($response, "$this->endpoint")) {
+            $objects = array_map(function ($object) {
+                return $this->instantiateEntity($object);
+            }, $response->{$this->endpoint});
+        }
 
-        // Convert to entityClass
-        return array_map(function ($object) {
-            return $this->instantiateEntity($object);
-        }, $objects->{$this->endpoint});
+        if (property_exists($response, "$this->pagination")) {
+            $pagination = new Pagination($response->{$this->pagination});
+        }
+
+        return new ObjectList($pagination, $objects);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Marat555\Eventbrite\Contracts\Api;
 
+use Marat555\Eventbrite\Factories\Entity\Event as EventEntity;
+
 /**
  * The Event object represents an Eventbrite Event. An Event is owned by one Organization..
  *
@@ -24,10 +26,11 @@ interface Event
     /**
      * Send create request to API
      *
-     * @param \Marat555\Eventbrite\Factories\Entity\Event $event
+     * @param int $organizer_id
+     * @param EventEntity $event
      * @return \Marat555\Eventbrite\Factories\Entity\Event
      */
-    public function create(\Marat555\Eventbrite\Factories\Entity\Event $event);
+    public function create(int $organizer_id, EventEntity $event);
 
     /**
      * Delete a webhook
