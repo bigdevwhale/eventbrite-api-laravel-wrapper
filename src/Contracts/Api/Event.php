@@ -33,6 +33,15 @@ interface Event
     public function create(int $organizer_id, array $event);
 
     /**
+     * Send update request to API
+     *
+     * @param int $id
+     * @param array $event
+     * @return \Marat555\Eventbrite\Factories\Entity\Event
+     */
+    public function update(int $id, array $event);
+
+    /**
      * Delete a webhook
      *
      * @param $id

@@ -10,6 +10,12 @@ namespace Marat555\Eventbrite\Factories\Entity;
  */
 class Event extends AbstractEntity
 {
+    /**
+     * Event ID
+     *
+     * @var string
+     */
+    public $id;
 
     /**
      * Event name

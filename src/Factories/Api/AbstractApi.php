@@ -108,6 +108,28 @@ abstract class AbstractApi
     }
 
     /**
+     * Update a specified Entity from the API resource.
+     *
+     * @param null $id
+     * @return mixed
+     * @throws \Exception
+     */
+    public function update($id, array $entity)
+    {
+        $entityNamespaceArray = explode('\\', $this->class);
+        $data[strtolower(end($entityNamespaceArray))] = $entity;
+
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . '/' . $id;
+
+        // Get the resource
+        $response = $this->client->post($endpoint, $data, ['content_type' => 'json']);
+
+        // Handle response
+        return $this->handleResponse(json_decode($response));
+    }
+
+    /**
      * Add expansion to request
      *
      * @param $expansion
