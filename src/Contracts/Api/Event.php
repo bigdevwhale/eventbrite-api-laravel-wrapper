@@ -27,10 +27,10 @@ interface Event
      * Send create request to API
      *
      * @param int $organizer_id
-     * @param EventEntity $event
+     * @param array $event
      * @return \Marat555\Eventbrite\Factories\Entity\Event
      */
-    public function create(int $organizer_id, EventEntity $event);
+    public function create(int $organizer_id, array $event);
 
     /**
      * Delete a webhook

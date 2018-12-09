@@ -39,9 +39,9 @@ class Event extends AbstractApi implements EventInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function create(int $organizerId, EventEntity $event)
+    public function create(int $organizerId, array $event)
     {
-        $data["event"] = $event->toArray();
+        $data["event"] = $event;
         $endpoint = "$this->subEndpoint/$organizerId/$this->endpoint";
 
         // Send "create" request
@@ -50,11 +50,6 @@ class Event extends AbstractApi implements EventInterface
         // Parse response
         $event = json_decode($event);
 
-        if (property_exists($event, $this->endpoint)) {
-            $event = $event->{$this->endpoint}[0];
-        }
-
-        // Create WebhookEntity from response
         return new EventEntity($event);
     }
 

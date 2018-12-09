@@ -38,7 +38,10 @@ class Client implements ClientInterface
 
         $this->client = new HttpClient([
             'handler' => $stack,
-            'base_uri' => $baseUrl
+            'base_uri' => $baseUrl,
+            'allow_redirects' => [
+                'strict' => true
+            ]
         ]);
 
         $this->token = $token;
