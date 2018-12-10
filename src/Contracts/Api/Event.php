@@ -42,10 +42,17 @@ interface Event
     public function update(int $id, array $event);
 
     /**
-     * Delete a webhook
+     * Delete an event
      *
      * @param $id
      * @return \Marat555\Eventbrite\Factories\Entity\Webhook
      */
-    public function delete($id);
+    public function delete(int $id);
+
+    /**
+     * Publish an event
+     *
+     * @param int $id
+     */
+    public function publish(int $id);
 }

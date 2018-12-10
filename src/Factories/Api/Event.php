@@ -57,7 +57,25 @@ class Event extends AbstractApi implements EventInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function delete($id)
+    public function publish(int $eventId)
+    {
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . "/" . $eventId . "/publish";
+
+        // Send "create" request
+        $event = $this->client->post($endpoint);
+
+        // Parse response
+        $event = json_decode($event);
+
+        return $event;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Exception
+     */
+    public function delete(int $id)
     {
         /// Send delete request
         $event = $this->client->delete($this->getEndpoint()."/".$id);
