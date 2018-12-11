@@ -28,7 +28,7 @@ interface Event
      *
      * @param int $organizer_id
      * @param array $event
-     * @return \Marat555\Eventbrite\Factories\Entity\Event
+     * @return EventEntity
      */
     public function create(int $organizer_id, array $event);
 
@@ -37,7 +37,7 @@ interface Event
      *
      * @param int $id
      * @param array $event
-     * @return \Marat555\Eventbrite\Factories\Entity\Event
+     * @return EventEntity
      */
     public function update(int $id, array $event);
 
@@ -45,7 +45,7 @@ interface Event
      * Delete an event
      *
      * @param $id
-     * @return \Marat555\Eventbrite\Factories\Entity\Webhook
+     * @return EventEntity
      */
     public function delete(int $id);
 
@@ -53,6 +53,15 @@ interface Event
      * Publish an event
      *
      * @param int $id
+     * @return boolean
      */
     public function publish(int $id);
+
+    /**
+     * Unpublish an event
+     *
+     * @param int $id
+     * @return boolean
+     */
+    public function unpublish(int $id);
 }

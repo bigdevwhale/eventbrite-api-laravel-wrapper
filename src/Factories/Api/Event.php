@@ -62,13 +62,31 @@ class Event extends AbstractApi implements EventInterface
         // Prep the endpoint
         $endpoint = $this->getEndpoint() . "/" . $eventId . "/publish";
 
-        // Send "create" request
-        $event = $this->client->post($endpoint);
+        // Send "publish" request
+        $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
 
         // Parse response
-        $event = json_decode($event);
+        $response = json_decode($response, true);
 
-        return $event;
+        return isset($response['published']) ? $response['published'] : false;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Exception
+     */
+    public function unpublish(int $eventId)
+    {
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . "/" . $eventId . "/unpublish";
+
+        // Send "unpublish" request
+        $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
+
+        // Parse response
+        $response = json_decode($response, true);
+
+        return isset($response['unpublished']) ? $response['unpublished'] : false;
     }
 
     /**
