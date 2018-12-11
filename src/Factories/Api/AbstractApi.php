@@ -94,11 +94,10 @@ abstract class AbstractApi
      * @return mixed
      * @throws \Exception
      */
-    public function get($id = null)
+    public function get($id)
     {
-
         // Prep the endpoint
-        $endpoint = ($id) ? $this->getEndpoint() . "/" . $id : $this->getEndpoint();
+        $endpoint = $this->getEndpoint() . "/" . $id;
 
         // Get the resource
         $response = $this->client->get($endpoint, $this->prepareParams());
@@ -110,11 +109,12 @@ abstract class AbstractApi
     /**
      * Update a specified Entity from the API resource.
      *
-     * @param null $id
+     * @param int $id
+     * @param array $entity
      * @return mixed
      * @throws \Exception
      */
-    public function update($id, array $entity)
+    public function update(int $id, array $entity)
     {
         $entityNamespaceArray = explode('\\', $this->class);
         $data[strtolower(end($entityNamespaceArray))] = $entity;

@@ -54,7 +54,7 @@ class Client implements ClientInterface
      * @param array $options
      * @return array
      */
-    private function prepareData($params = [], $options = [])
+    private function prepareData($params = null, $options = [])
     {
         if (array_get($options, 'content_type') == "json") {
             $data['json'] = $params; // pass data as array which gets json_encoded
@@ -102,9 +102,9 @@ class Client implements ClientInterface
      * @return string
      * @throws \Exception
      */
-    public function post($endPoint, array $params = [], array $options = [])
+    public function post($endPoint, array $params = null, array $options = [])
     {
-        $options += ['headers' => ['Authorization' => "Bearer $this->token"]];
+        $options['headers']['Authorization'] = "Bearer $this->token";
         $response = $this->client->post($endPoint, $this->prepareData($params, $options));
         switch ($response->getHeader('content-type')) {
             case "application/json":
