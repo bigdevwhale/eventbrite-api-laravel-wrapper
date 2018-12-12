@@ -3,6 +3,7 @@
 namespace Marat555\Eventbrite\Contracts\Api;
 
 use Marat555\Eventbrite\Factories\Entity\Event as EventEntity;
+use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 
 /**
  * The Event object represents an Eventbrite Event. An Event is owned by one Organization..
@@ -64,4 +65,14 @@ interface Event
      * @return boolean
      */
     public function unpublish(int $id);
+
+    /**
+     * List of events by VenueID|OrganizationID|SeriesID
+     *
+     * @param string $by - 'venue'|'organization'|'series'
+     * @param int $id
+     * @param array $filterParams
+     * @return ObjectList
+     */
+    public function list(string $by, int $id, array $filterParams = []);
 }
