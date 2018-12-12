@@ -47,4 +47,11 @@ class Pagination extends AbstractEntity
      * @var string
      */
     public $continuation;
+
+    /**
+     * A boolean indicating if the next request will contain any results
+     *
+     * @var boolean
+     */
+    public $hasMoreItems;
 }

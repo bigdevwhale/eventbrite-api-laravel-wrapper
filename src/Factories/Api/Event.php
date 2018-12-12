@@ -4,6 +4,8 @@ namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Entity\Event as EventEntity;
 use Marat555\Eventbrite\Contracts\Api\Event as EventInterface;
+use Marat555\Eventbrite\Factories\HelperEntity\Pagination;
+use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -13,6 +15,12 @@ use Marat555\Eventbrite\Contracts\Api\Event as EventInterface;
  */
 class Event extends AbstractApi implements EventInterface
 {
+    /**
+     * List path contants
+     */
+    const ORGANIZATIONS = "organizations";
+    const VENUES = "venue";
+    const SERIES = "series";
 
     /**
      * The class of the entity we are working with
@@ -29,20 +37,13 @@ class Event extends AbstractApi implements EventInterface
     protected $endpoint = "events";
 
     /**
-     * The Eventbrite API subendpoint
-     *
-     * @var string
-     */
-    protected $subEndpoint = "organizations";
-
-    /**
      * {@inheritdoc}
      * @throws \Exception
      */
     public function create(int $organizerId, array $event)
     {
-        $data["event"] = $event;
-        $endpoint = "$this->subEndpoint/$organizerId/$this->endpoint";
+        $data['event'] = $event;
+        $endpoint = self::ORGANIZATIONS . "/$organizerId/$this->endpoint";
 
         // Send "create" request
         $event = $this->client->post($endpoint, $data, ['content_type' => 'json']);
@@ -60,7 +61,7 @@ class Event extends AbstractApi implements EventInterface
     public function publish(int $eventId)
     {
         // Prep the endpoint
-        $endpoint = $this->getEndpoint() . "/" . $eventId . "/publish";
+        $endpoint = $this->getEndpoint() . '/' . $eventId . '/publish';
 
         // Send "publish" request
         $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
@@ -78,7 +79,7 @@ class Event extends AbstractApi implements EventInterface
     public function unpublish(int $eventId)
     {
         // Prep the endpoint
-        $endpoint = $this->getEndpoint() . "/" . $eventId . "/unpublish";
+        $endpoint = $this->getEndpoint() . '/' . $eventId . '/unpublish';
 
         // Send "unpublish" request
         $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
@@ -96,12 +97,40 @@ class Event extends AbstractApi implements EventInterface
     public function delete(int $id)
     {
         /// Send delete request
-        $event = $this->client->delete($this->getEndpoint()."/".$id);
+        $event = $this->client->delete($this->getEndpoint(). '/' .$id);
 
         // Parse response
         $event = json_decode($event);
 
         // Create WebhookEntity from response
         return new EventEntity($event);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Exception
+     */
+    public function list(string $by, int $id, array $filterParams = [])
+    {
+        $objects = null;
+        $pagination = null;
+
+        // Prep the endpoint
+        $endpoint = "$by/$id/$this->endpoint";
+
+        $response = $this->client->get($endpoint, $filterParams);
+        $response = json_decode($response);
+
+        if (property_exists($response, "$this->endpoint")) {
+            $objects = array_map(function ($object) {
+                return $this->instantiateEntity($object);
+            }, $response->{$this->endpoint});
+        }
+
+        if (property_exists($response, "$this->pagination")) {
+            $pagination = new Pagination($response->{$this->pagination});
+        }
+
+        return new ObjectList($pagination, $objects);
     }
 }
