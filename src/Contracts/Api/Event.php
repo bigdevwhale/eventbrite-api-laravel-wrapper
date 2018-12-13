@@ -13,7 +13,6 @@ use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
  */
 interface Event
 {
-
     /**
      * {@inheritdoc}
      */
@@ -46,7 +45,7 @@ interface Event
      * Delete an event
      *
      * @param $id
-     * @return EventEntity
+     * @return boolean
      */
     public function delete(int $id);
 
@@ -75,4 +74,20 @@ interface Event
      * @return ObjectList
      */
     public function list(string $by, int $id, array $filterParams = []);
+
+    /**
+     * Copy an event
+     *
+     * @param $id
+     * @return EventEntity
+     */
+    public function copy(int $id);
+
+    /**
+     * Cancel an event
+     *
+     * @param $id
+     * @return boolean
+     */
+    public function cancel(int $id);
 }
