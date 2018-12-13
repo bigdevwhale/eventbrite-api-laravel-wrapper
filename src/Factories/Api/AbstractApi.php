@@ -130,6 +130,27 @@ abstract class AbstractApi
     }
 
     /**
+     * Delete a specified Entity from the API resource
+     *
+     * @param $id
+     * @return boolean
+     * @throws \Exception
+     */
+    public function delete(int $id)
+    {
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . "/" . $id;
+
+        // Send "delete" request
+        $response = $this->client->delete($endpoint, null, ['content_type' => 'json']);
+
+        // Parse response
+        $response = json_decode($response, true);
+
+        return isset($response['deleted']) ? $response['deleted'] : false;
+    }
+
+    /**
      * Add expansion to request
      *
      * @param $expansion

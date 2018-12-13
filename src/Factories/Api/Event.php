@@ -94,22 +94,6 @@ class Event extends AbstractApi implements EventInterface
      * {@inheritdoc}
      * @throws \Exception
      */
-    public function delete(int $id)
-    {
-        /// Send delete request
-        $event = $this->client->delete($this->getEndpoint(). '/' .$id);
-
-        // Parse response
-        $event = json_decode($event);
-
-        // Create WebhookEntity from response
-        return new EventEntity($event);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @throws \Exception
-     */
     public function list(string $by, int $id, array $filterParams = [])
     {
         $objects = null;
@@ -132,5 +116,41 @@ class Event extends AbstractApi implements EventInterface
         }
 
         return new ObjectList($pagination, $objects);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Exception
+     */
+    public function cancel(int $eventId)
+    {
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . "/" . $eventId . "/cancel";
+
+        // Send "cancel" request
+        $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
+
+        // Parse response
+        $response = json_decode($response, true);
+
+        return isset($response['canceled']) ? $response['canceled'] : false;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @throws \Exception
+     */
+    public function copy(int $eventId)
+    {
+        // Prep the endpoint
+        $endpoint = $this->getEndpoint() . "/" . $eventId . "/copy";
+
+        // Send "copy" request
+        $response = $this->client->post($endpoint, null, ['content_type' => 'json']);
+
+        // Parse response
+        $event = json_decode($response);
+
+        return new EventEntity($event);
     }
 }
