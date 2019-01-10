@@ -2,6 +2,7 @@
 
 namespace Marat555\Eventbrite;
 
+use Marat555\Eventbrite\Factories\Api\Venue;
 use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\Api\Category;
 use Marat555\Eventbrite\Factories\Api\Subcategory;
@@ -58,5 +59,13 @@ class Eventbrite
     public function event()
     {
         return new Event($this->client);
+    }
+
+    /**
+     * @return Venue
+     */
+    public function venue()
+    {
+        return new Venue($this->client);
     }
 }

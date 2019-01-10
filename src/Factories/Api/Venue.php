@@ -1,47 +1,78 @@
 <?php
 
-namespace Marat555\Eventbrite\Contracts\Api;
+namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Entity\Venue as VenueEntity;
+use Marat555\Eventbrite\Contracts\Api\Venue as VenueInterface;
 use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
+use Marat555\Eventbrite\Factories\HelperEntity\Pagination;
 
 /**
- * A location where an Event happens.
+ * Eventbrite API wrapper for Laravel
  *
  * @package  Eventbrite
  * @author   @marat555
  */
-interface Venue
+class Venue extends AbstractApi implements VenueInterface
 {
+
+    /**
+     * The class of the entity we are working with
+     *
+     * @var VenueEntity
+     */
+    protected $class = VenueEntity::class;
+
+    /**
+     * The Eventbrite API endpoint of the resource type.
+     *
+     * @var string
+     */
+    protected $endpoint = "venues";
+
     /**
      * {@inheritdoc}
+     * @throws \Exception
      */
-    public function get($id);
+    public function create(int $organizerId, array $venue)
+    {
+        $data['venue'] = $venue;
+        $endpoint = Event::ORGANIZATIONS . "/$organizerId/$this->endpoint";
+
+        // Send "create" request
+        $venue = $this->client->post($endpoint, $data, ['content_type' => 'json']);
+
+        // Parse response
+        $venue = json_decode($venue);
+
+        return new VenueEntity($venue);
+    }
 
     /**
-     * Send create request to API
-     *
-     * @param int $organizer_id
-     * @param array $event
-     * @return VenueEntity
+     * {@inheritdoc}
+     * @throws \Exception
      */
-    public function create(int $organizer_id, array $event);
+    public function list(int $organizationId)
+    {
+        $objects = null;
+        $pagination = null;
 
-    /**
-     * Send update request to API
-     *
-     * @param int $id
-     * @param array $event
-     * @return VenueEntity
-     */
-    public function update(int $id, array $event);
+        // Prep the endpoint
+        $endpoint = Event::ORGANIZATIONS . "/$organizationId/$this->endpoint";
 
-    /**
-     * List of venues by OrganizationID
-     *
-     * @param int $organizationId
-     * @param array $filterParams
-     * @return ObjectList
-     */
-    public function list(int $organizationId);
+        $response = $this->client->get($endpoint);
+        $response = json_decode($response);
+
+        if (property_exists($response, "$this->endpoint")) {
+            $objects = array_map(function ($object) {
+                return $this->instantiateEntity($object);
+            }, $response->{$this->endpoint});
+        }
+
+        if (property_exists($response, "$this->pagination")) {
+            $pagination = new Pagination($response->{$this->pagination});
+        }
+
+        return new ObjectList($pagination, $objects);
+    }
 }

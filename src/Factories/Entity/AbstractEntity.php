@@ -60,8 +60,6 @@ abstract class AbstractEntity
         }
 
         if (!empty($value)) {
-            $array = $value; // for clarity, call it what it is
-
             // Get the class of the new entity we want to instantiate
             $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . ucfirst($property);
 
