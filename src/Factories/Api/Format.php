@@ -4,6 +4,7 @@ namespace Marat555\Eventbrite\Factories\Api;
 
 use Marat555\Eventbrite\Factories\Entity\Format as FormatEntity;
 use Marat555\Eventbrite\Contracts\Api\Format as FormatInterface;
+use Marat555\Eventbrite\Factories\HelperEntity\FormatList;
 use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 use Marat555\Eventbrite\Factories\HelperEntity\Pagination;
 
@@ -31,13 +32,18 @@ class Format extends AbstractApi implements FormatInterface
     protected $endpoint = "formats";
 
     /**
+     * @var string
+     */
+    protected $locale = "locale";
+
+    /**
      * {@inheritdoc}
      * @throws \Exception
      */
     public function list()
     {
         $objects = null;
-        $pagination = null;
+        $locale = null;
 
         $response = $this->client->get($this->endpoint);
         $response = json_decode($response);
@@ -48,10 +54,10 @@ class Format extends AbstractApi implements FormatInterface
             }, $response->{$this->endpoint});
         }
 
-        if (property_exists($response, "$this->pagination")) {
-            $pagination = new Pagination($response->{$this->pagination});
+        if (property_exists($response, $this->locale)) {
+            $locale = $response->{$this->locale};
         }
 
-        return new ObjectList($pagination, $objects);
+        return new FormatList($locale, $objects);
     }
 }
