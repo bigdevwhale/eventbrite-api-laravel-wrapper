@@ -8,6 +8,7 @@ use Marat555\Eventbrite\Factories\Api\Category;
 use Marat555\Eventbrite\Factories\Api\Subcategory;
 use Marat555\Eventbrite\Factories\Api\Webhook;
 use Marat555\Eventbrite\Factories\Api\Event;
+use Marat555\Eventbrite\Factories\Api\User;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -67,5 +68,13 @@ class Eventbrite
     public function venue()
     {
         return new Venue($this->client);
+    }
+
+    /**
+     * @return User
+     */
+    public function user()
+    {
+        return new User($this->client);
     }
 }
