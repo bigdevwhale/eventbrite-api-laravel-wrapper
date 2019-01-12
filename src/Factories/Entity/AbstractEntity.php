@@ -61,7 +61,7 @@ abstract class AbstractEntity
 
         if (!empty($value)) {
             // Get the class of the new entity we want to instantiate
-            $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . ucfirst($property);
+            $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . $this->convertToCamelCase($property);
 
             // Update each element of the array to have the instantiated entity
             if (class_exists($class)) {
