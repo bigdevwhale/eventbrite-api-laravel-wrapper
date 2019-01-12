@@ -2,10 +2,6 @@
 
 namespace Marat555\Eventbrite\Factories\Entity;
 
-/**
- * Cost breakdown for the order
- * @package Marat555\Eventbrite\Factories\Entity
- */
 class Costs extends AbstractEntity
 {
 

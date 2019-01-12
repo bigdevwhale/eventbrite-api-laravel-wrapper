@@ -103,4 +103,11 @@ class Profile extends AbstractEntity
      * @var string
      */
     public $workPhone;
+
+    /**
+     * The attendee's basic profile information
+     *
+     * @var Addresses
+     */
+    public $addresses;
 }

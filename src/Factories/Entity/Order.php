@@ -53,4 +53,45 @@ class Order extends AbstractEntity
      */
     public $email;
 
+    /**
+     * Cost breakdown for this order
+     *
+     * @var Costs
+     */
+    public $costs;
+
+    /**
+     * The event id this order is against
+     *
+     * @var string
+     */
+    public $eventId;
+
+    /**
+     * Full details of the event (requires the event expansion)
+     *
+     * @var Event
+     */
+    public $event;
+
+    /**
+     * The list of attendees that belong to this order (requires the attendees expansion)
+     *
+     * @var Attendee[]
+     */
+    public $attendees;
+
+    /**
+     * Is an absolute URL to the API endpoint that will return you the canonical representation of the order.
+     *
+     * @var string
+     */
+    public $resourceUri;
+
+    /**
+     * The status of the order
+     *
+     * @var string
+     */
+    public $status;
 }
