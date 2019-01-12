@@ -54,19 +54,19 @@ abstract class AbstractEntity
      */
     public function setProperty($property, $value)
     {
-        if (property_exists($this, $property)) {
-            $this->$property = $value;
-            return;
-        }
-
         if (!empty($value)) {
             // Get the class of the new entity we want to instantiate
-            $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . $this->convertToCamelCase($property);
+            $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . $this->convertToCamelCaseWithFirstUpperSymbol($property);
 
             // Update each element of the array to have the instantiated entity
             if (class_exists($class)) {
                 $this->$property = new $class($value);
+                return;
             }
+        }
+
+        if (property_exists($this, $property)) {
+            $this->$property = $value;
         }
     }
 
@@ -94,6 +94,20 @@ abstract class AbstractEntity
         };
 
         return lcfirst(preg_replace_callback('/(^|_)([a-z])/', $callback, $str));
+    }
+
+    /**
+     * @param string $str Snake case string
+     *
+     * @return string Camel case string with first Upper Symbol
+     */
+    protected static function convertToCamelCaseWithFirstUpperSymbol($str)
+    {
+        $callback = function ($match) {
+            return strtoupper($match[2]);
+        };
+
+        return ucfirst(preg_replace_callback('/(^|_)([a-z])/', $callback, $str));
     }
 
 
