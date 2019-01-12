@@ -37,7 +37,7 @@ class Venue extends AbstractApi implements VenueInterface
     public function create(int $organizerId, array $venue)
     {
         $data['venue'] = $venue;
-        $endpoint = Event::ORGANIZATIONS . "/$organizerId/$this->endpoint";
+        $endpoint = "organizations/$organizerId/$this->endpoint";
 
         // Send "create" request
         $venue = $this->client->post($endpoint, $data, ['content_type' => 'json']);
@@ -58,7 +58,7 @@ class Venue extends AbstractApi implements VenueInterface
         $pagination = null;
 
         // Prep the endpoint
-        $endpoint = Event::ORGANIZATIONS . "/$organizationId/$this->endpoint";
+        $endpoint = "organizations/$organizationId/$this->endpoint";
 
         $response = $this->client->get($endpoint);
         $response = json_decode($response);

@@ -16,13 +16,6 @@ use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 class Event extends AbstractApi implements EventInterface
 {
     /**
-     * List path contants
-     */
-    const ORGANIZATIONS = "organizations";
-    const VENUES = "venue";
-    const SERIES = "series";
-
-    /**
      * The class of the entity we are working with
      *
      * @var EventEntity
@@ -43,7 +36,7 @@ class Event extends AbstractApi implements EventInterface
     public function create(int $organizerId, array $event)
     {
         $data['event'] = $event;
-        $endpoint = self::ORGANIZATIONS . "/$organizerId/$this->endpoint";
+        $endpoint = "organizations/$organizerId/$this->endpoint";
 
         // Send "create" request
         $event = $this->client->post($endpoint, $data, ['content_type' => 'json']);

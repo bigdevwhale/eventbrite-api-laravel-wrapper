@@ -79,13 +79,13 @@ class Client implements ClientInterface
     /**
      * @param $endPoint
      * @param array $params
+     * @param array $options
      * @return mixed
-     * @throws \Exception
      */
-    public function get($endPoint, array $params = [])
+    public function get($endPoint, array $params = [], array $options = [])
     {
         $params += ['token' => $this->token];
-        $response = $this->client->get($endPoint, $this->prepareData($params));
+        $response = $this->client->get($endPoint, $this->prepareData($params, $options));
         switch ($response->getHeader('content-type')) {
             case "application/json":
                 return $response->json();
