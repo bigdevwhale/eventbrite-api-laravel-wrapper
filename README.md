@@ -1,49 +1,45 @@
-# Laravel Rancher
+# Laravel Eventbrite
 
-Rancher API wrapper for Laravel. This package provides a simple interface to Rancher's (awesome) API. Orchestrate your private container service with expressive, clean PHP.
+Eventbrite API wrapper for Laravel. This package provides a simple interface to Eventbite's (awesome) API. Organize Eventbrite integration with expressive, clean PHP.
 
 
 ## Installation
-Laravel Rancher uses compose to make installation a breeze.
+Laravel Eventbrite uses compose to make installation a breeze.
 
 
 **Install via composer** 
 ``` bash
-composer require benmag/laravel-rancher
+composer require marat555/eventbrite
 ```
 
 
 **Register service provider**
-Add the Laravel Rancher service provider to your `config/app.php` file in the providers key
+Add the Laravel Eventbrite service provider to your `config/app.php` file in the providers key
 ```php
 'providers' => [
     // ... other providers
-    Benmag\Rancher\RancherServiceProvider::class,
+    Marat555\Eventbrite\EventbriteServiceProvider::class,
 ]
 ```
 
 
 **Rancher facade alias**
-Then add the `Rancher` facade to your `aliases` key: `'Rancher' => Benmag\Rancher\Facades\Rancher::class`.  
+Then add the `Eventbrite` facade to your `aliases` key: `'Eventbrite' => Marat555\Eventbrite\Facades\Eventbrite::class.  
 
 
 
 ## Configuration
 Configuration can be done via your `.env` file.
 ```
-RANCHER_BASE_URL=http://localhost:8080/v1/
-RANCHER_ACCESS_KEY=xxxxxxx
-RANCHER_SECRET_KEY=xxxxxxx
+RANCHER_BASE_URL=https://www.eventbriteapi.com/v3/
+EVENTBRITE_TOKEN=xxxxxxx
 ````
->You may also publish the config file to `config/rancher.pzhp` for editing:
+>You may also publish the config file to `config/eventbrite.pzhp` for editing:
 `php artisan vendor:publish --provider="Benmag\Rancher\RancherServiceProvider"`
  
-### Notes
-Make sure you have authentication enabled. Without this, you might experience some weird behaviour. 
-I still need to look into changing Environments/Projects in a slightly more coordinated way but you should just be able to instantiate a new client instance.
-
+ 
 ## Usage
-Laravel Rancher is incredibly intuitive to use. 
+Laravel Eventbrite is incredibly intuitive to use. 
 
 ### Introduction
 Already configured everything and just want to see it in action? Take a look at the example code below.
@@ -52,584 +48,231 @@ Already configured everything and just want to see it in action? Take a look at 
 
 namespace App\Http\Controllers;
 
-use Rancher;
+use Eventbrite;
 use App\Http\Controllers\Controller;
 
-class HostController extends Controller
+class EventbriteController extends Controller
 {
-    public function index()
+    public function getEvent(int $eventId)
     {
-        return response()->json(Rancher::host()->all());
+        return response()->json(Eventbrite::event()->get($eventId));
     }
 }
 ```
 
-### Host
-#### Retrieving all Hosts
+### Event
+#### Retrieve an Event by Event ID
 ``` php
-Rancher::host()->all();
+Eventbrite::event()->c($eventId);
 ```
 
-#### Retrieve Host by ID
+#### Create a new Event
 ```php
-Rancher::host()->get("1h1");
+Eventbrite::event()->create(int $organizerId, array $event);
 ```
 
-#### Activate a Host by ID
+#### Update Event by Event ID
 ```php
-Rancher::host()->activate("1h1");
+Eventbrite::event()->update(int $eventId, array $event);
 ```
 
-#### Evacuate a Host by ID
+#### List Events by Venue ID
 ```php
-Rancher::host()->evacuate("1h1");
+Eventbrite::event()->list('venue', int $venueId, array $filterParams = []);
 ```
 
-#### Remove a Host by ID
+#### List Events by Organization ID
 ```php
-Rancher::host()->remove("1h1");
+Eventbrite::event()->list('organization', int $organizationId, array $filterParams = []);
 ```
 
-### Container
-#### Retrieving all Containers 
+#### List Events by Event Series ID
+```php
+Eventbrite::event()->list('series', int $seriesId, array $filterParams = []);
+```
+
+#### Publish an Event. Returns a boolean indicating the success or failure of the publish action.
+```php
+Eventbrite::event()->publish(int $eventId);
+```
+
+#### Unpublish an Event. Returns a boolean indicating the success or failure of the unpublish action.
+```php
+Eventbrite::event()->unpublish(int $eventId);
+```
+
+#### Cancel an Event. Returns a boolean indicating the success or failure of the cancel action.
+```php
+Eventbrite::event()->cancel(int $eventId);
+```
+
+#### Delete an Event. Returns a boolean indicating the success or failure of the delete action.
+```php
+Eventbrite::event()->delete(int $eventId);
+```
+
+### Category
+#### Retrieve a Category by Category ID
 ```php 
-Rancher::container()->all();
+Eventbrite::category()->get(int $categoryId);
 ```
 
-#### Retrieve Container by ID
+#### List of Categories
 ```php 
-Rancher::container()->get("1i140");
+Eventbrite::category()->all(int $categoryId);
 ```
 
-#### Create a Container 
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\Container;
-
-$newContainer = new Container([
-    'name' => 'HelloWorld',
-    'description' => 'New container created via Laravel Rancher',
-    'imageUuid' => "docker:ubuntu:14.04.3",
-]);
-
-Rancher::container()->create($newContainer);
+### Subcategory
+#### Retrieve a Subcategory by Subcategory ID
+```php 
+Eventbrite::subcategory()->get(int $subcategoryId);
 ```
 
-### Stack
-
-#### Create a Stack 
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\Stack;
-
-$newStack = new Stack([
-    'name' => "my-stack",
-    'description' => 'An example stack',
-    'dockerCompose' => "odoo:\n  image: odoo\n  ports:\n    - \"8069:8069\"\n  links:\n    - db\ndb:\n  image: postgres\n  environment:\n    - POSTGRES_USER=odoo\n    - POSTGRES_PASSWORD=odoo\n",
-    'rancherCompose' => ".catalog:\n  name: \"Odoo\"\n  version: \"0.1-educaas\"\n  description: \"ERP management powered by Odoo\"\n  uuid: odoo-0\n  questions:\n\nodoo:\n",
-    'externalId' => "catalog://community:odoo:0",
-    'startOnCreate' => true
-]);
-
-Rancher::stack()->project('1a8')->create($newStack);
+#### List of Subcategories
+```php 
+Eventbrite::subcategory()->all(int $categoryId);
 ```
 
-When creating a Stack, you will need to tell Rancher which Project you want to create it in. 
-
-#### Update an Stack
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\Stack;
-
-$updatedStack = new Stack([
-    'name' => "my-updated-stack",
-    'description' => 'An updated stack',
-]);
-
-Rancher::stack()->update("1st312", $updatedStack);
+### Display Settings
+#### Retrieve the Display Settings by Event ID
+```php 
+Eventbrite::displaySettings()->get(int $eventId);
 ```
 
-#### Activate Services in an Stack
-```php
-Rancher::stack()->activateServices("1st312");
+#### Update Display Settings
+```php 
+Eventbrite::displaySettings()->update(int $eventId, array $displaySettings)
+;
 ```
 
-#### Deactivate Services in an Stack
-```php
-Rancher::stack()->deactivateServices("1st312");
+### User
+#### RRetrieve a User by User ID
+```php 
+Eventbrite::user()->get($userId);
 ```
 
-#### Delete a Stack
-```php
-Rancher::stack()->delete("1st312");
+#### Retrieve your User
+```php 
+Eventbrite::user()->me();
 ```
 
-
-### Project
-#### Create a new Project
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\Project;
-
-$project = new Project([
-    'name' => 'Hello World',
-]);
-
-Rancher::project()->create($project);
+### Venue
+#### Retrieve a Venue by Venue ID
+```php 
+Eventbrite::venue()->get($venueId);
 ```
 
-#### Activate a Project
-```php
-Rancher::project()->activate("1a8");
+#### Create new Venue
+```php 
+Eventbrite::venue()->create(int $organizerId, array $venue);
 ```
 
-#### Deactivate a Project
-```php
-Rancher::project()->deactivate("1a8");
+#### Update a Venue
+```php 
+Eventbrite::venue()->update(int $venueId, array $venue);
 ```
 
-#### Delete a Project
-```php
-Rancher::project()->delete("1a8");
+#### List Venues by Organization ID
+```php 
+Eventbrite::venue()->list(int $organizationId);
+```
+
+### Format
+
+#### Retrieve a Format by Format ID
+```php 
+Eventbrite::format->get($formatId);
+```
+
+#### List Formats
+```php 
+Eventbrite::format->list();
 ```
 
 
-### Service
-#### Create a Service
-```php
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\Service;
+### Media
 
-$newService = new Service([
-    'name' => 'newService',
-    'stackId' => '1st312',
-    'launchConfig' => [
-        'stdinOpen' => true,
-        'imageUuid' => 'docker:ubuntu:14.04.3'
-    ],
-]);
-
-Rancher::service()->project("1a8")->create($newService);
+#### Retrieve Media by Media ID
+```php 
+Eventbrite::media->get($formatId);
 ```
 
-#### Update a Service
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\Service;
-
-$updatedService = new Service([
-    "description" => "I was updated",
-    "name" => "db",
-    "scale" => 1
-]);
-
-Rancher::service()->project("1a8")->update("1s23", $updatedService);
+#### Create a Media Upload
+```php 
+Eventbrite::media->createUpload(array $mediaUpload);
 ```
 
-
-#### Add a Service Link
-You may also add a single service link to the service. You can use the `name` value to specify a link alias.
-```php
-use Rancher;
-
-$serviceLink = ['name' => 'redis', 'serviceId' => '1s25'];
-
-Rancher::service()->addServiceLink("1s24", $serviceLink);
+#### Retrieve a Media Upload
+```php 
+Eventbrite::media->createUpload(array $mediaUploadType);
 ```
-
-#### Set Service Links
-The `setServiceLinks` method will overwrite all of the links for that service.  
-```php
-use Rancher;
-
-$serviceLinks = [
-    ['name' => 'db', 'serviceId' => '1s23']
-];
-
-Rancher::service()->setServiceLinks("1s24", $serviceLinks);
-```
-
-#### Remove a Service Link
-Individual service links can also be removed
-```php
-use Rancher;
-
-$remove = ['name' => 'db', 'serviceId' => '1s23'];
-
-Rancher::service()->removeServiceLink("1s24", $remove);
-```
-
-#### Upgrade a Service
-```php
-use Rancher;
-
-$serviceUpgrade = [
-    'inServiceStrategy' => [
-        'batchSize' => 1,
-        'intervalMillis' => 2000,
-        'startFirst' => false,
-        'launchConfig' => [
-            'imageUuid' => 'docker:postgres',
-            'startOnCreate' => true,
-        ]
-    ]
-];
-
-Rancher::service()->upgrade("1s23", $serviceUpgrade);
-```
-
-#### Finish a Service Upgrade
-```php
-Rancher::service()->finishUpgrade("1s23");
-```
-
-#### Cancel a Service Upgrade
-```php
-Rancher::service()->cancelUpgrade("1s23");
-```
-
-#### Rollback an Upgrade 
-```php
-Rancher::service()->rollback("1s23");
-```
-
-#### Cancel Rollback
-```php
-Rancher::service()->cancelRollback("1s23");
-```
-
-### Load Balancer Service
-#### Create a Load Balancer
-```php
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\LoadBalancerService;
-
-$newLb = new LoadBalancerService([
-    'name' => 'lb',
-    'stackId' => '1st316',
-    'launchConfig' => [
-        'ports' => [
-            "80",
-            "8080"
-        ],
-        'imageUuid' => 'docker:rancher/lb-service-haproxy:v0.7.5'
-    ],
-    'lbConfig' => [
-        'portRules' => [
-            [
-                'hostname' => '',
-                'serviceId' => "1s583",
-                'sourcePort' => 8080,
-                'targetPort' => 80,
-                'type' => 'portRule'
-            ]
-        ]
-    ]
-]);
-
-Rancher::loadBalancerService()->project('1a8')->create($newLb);
-```
-
-#### Update a Load Balancer
-```php
-use Rancher;
-use Benmag\Rancher\Factories\Entity\LoadBalancerService;
-
-$updatedLb = new LoadBalancerService([
-    'name' => 'lb-updated',
-    'stackId' => '1st316',
-    'launchConfig' => [
-        'ports' => [
-            "80",
-        ],
-        'imageUuid' => 'docker:rancher/lb-service-haproxy:v0.7.5'
-    ],
-    'lbConfig' => [
-        'portRules' => [
-            [
-                'hostname' => '',
-                'protocol' => 'http',
-                'serviceId' => "1s583",
-                'sourcePort' => 80,
-                'targetPort' => 80,
-                'type' => 'portRule'
-            ]
-        ]
-    ],
-]);
-
-Rancher::loadBalancerService()->project("1a8")->update("1s26", $updatedLb);
-```
-
-
-#### Add a Service Link to Load Balancer
-You may also add a single service link to the service. You can use the `name` value to specify a link alias.
-```php
-use Rancher;
-
-$serviceLink = [
-    'serviceId' => '1s10', 
-    'ports' => [
-        "hello.world.domain.com=80"
-    ]
-];
-
-Rancher::loadBalancerService()->addServiceLink("1s27", $serviceLink);
-```
-
-#### Set Service Links for Load Balancer
-The `setServiceLinks` method will overwrite all of the links for that load balancer.  
-```php
-use Rancher;
-
-$serviceLinks = [
-    [
-        'serviceId' => '1s23',
-        'ports' => [
-            "hello.world.example.com=80",
-        ]
-    ]
-];
-
-Rancher::loadBalancerService()->setServiceLinks("1s24", $serviceLinks);
-```
-
-#### Remove a Service Link from Load Balancer
-Individual service links can also be removed.
-```php
-use Rancher;
-
-$remove = ['serviceId' => '1s23'];
-
-Rancher::loadBalancerService()->removeServiceLink("1s24", $remove);
-```
-
-### Machine
-[todo]
-
-### Registry
-
-#### Add Registry
-```php
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\Registry;
-
-$registry = new Registry([
-    'serverAddress' => "registry.example.com",
-]);
-
-$registryResponse = Rancher::registry()->project("1a8")->create($registry));
-```
-
-#### Activate Registry 
-
-```
-use Rancher; 
-
-Rancher::registry()->activate($id);
-```
-
-
-#### Deactivate Registry 
-
-```
-use Rancher; 
-
-Rancher::registry()->deactivate($id);
-```
-
-
-### Registry Credential 
-
-#### Add registry credential  
-```php
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\RegistryCredential;
-
-$cred = new RancherRegistryCredential([
-    'registryId' => "1sp120",
-    'email' => "email@example.com",
-    'publicValue' => "username",
-    'secretValue' => "password"
-]);
-
-Rancher::registryCredential()->create($cred);
-```
-
-
-### Registration Token
-
-#### Create Registration Token
-```
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\RegistrationToken;
-
-Rancher::registrationToken()->create(new RegistrationToken([
-    'accountId' => 'rancerProjectId'
-]));
-```
-
-#### Fetch Registration Tokens
-```
-use Rancher; 
-
-Rancher::registrationToken()->filter(['state' => 'active'])->get()
-```
-
-### Service Consume Map
-[todo]
-
-### Certificates
-
-#### Get certificates
-```
-use Rancher; 
-Rancher::certificate()->all();
- ```
-
-#### Create a certificate 
-```
-use Rancher; 
-use Benmag\Rancher\Factories\Entity\Certificate;
-
-$cert = new Certificate([
-    'name' => 'My Cert', 
-    'description' => 'Hello World',
-    'key' => 'Your Private Key', 
-    'cert' => 'Your Certificate',
-    'certChain' => 'Your Chain Certs',
-]);
-
-Rancher::certificate()->create($cert);
-```
-
-#### Remove a certificate
-```
-use Rancher; 
-Rancher::certificate()->delete($id);
- ```
 
 ### Query Building 
-The wrapper also provides a convenient way for you to build fairly elaborate Rancher API requests.
+The wrapper also provides a convenient way for you to build fairly elaborate Eventbrite API requests.
 The following methods return the instance so you can chain more constraints onto the request as required.
 
-#### Filters
-Rancher lets you specify filters on API resources. The type of filter to apply is set via the key. Listed below is an example of all of the filter options.
+#### Expansions
+Eventbrite has many models that refer to each other, and often you’ll want to fetch related data along with the primary model you’re querying - 
+for example, you’ll want to fetch an event along with organizer.
 
 ```php
-$params = [
-    'name' => 'Hello World', // name = "Hello World"
-    'name_ne' => 'Hello World', // name != "Hello World"
-    'name_notnull' => null, // name is not null
-    'description_null' => null, // description is null
-    'description_notlike' => 'Hello World', // description NOT LIKE '%Hello World%'
-    'description_like' => 'Hello World', // description LIKE '%Hello World%'
-    'name_prefix' => 'Hello', // name LIKE 'Hello%'
-];
-
-Rancher::stack()->filter($params)->get();
+Eventbrite::event()->expand('organizer')->get($eventId);
 
 ```
-> Remember: to change the field you filter on, change the key e.g. `['state' => 'active']` or `['description_notnull' => null]`
-
-#### Include
-With Rancher, you can specify additional endpoints that should be eager loaded with the request through an `include` parameter. This functionality is exposed via the `with` method.  
-```php
-Rancher::service()->with(['instances'])->get("1s724");
-```
-
-#### Fields
-Define additional fields from the API for the entity to dynamically expose. You can use this to enable access properties that are not explicitly defined by the entity class.
-```php
-Rancher::service()->fields(['uuid'])->get("1s724");
-```
-
-#### Scope
-By default, Rancher's scope is the default Project your credentials have access too. This chained method lets you easily change the scope to another project your credentials have access to on the fly. 
-```php
-Rancher::host()->scope('1a3302')->all();
-```
-
-Of course, you may utilize the `setClient` method to change the client to something completely new but if you want to change 
-
-#### All together now
-Here is a simple example of how you can use method chaining to build elaborate Rancher API requests.
-```php
-Rancher::services()
-            ->scope('1a3302')
-            ->with(['instances'])
-            ->filter(['environmentId' => "1e512"])
-            ->fields(['uuid'])
-            ->get()
-```
-
 
 ### Handling Exceptions
-The Rancher API will return errors as required. I am still looking for a nicer way to handle these exceptions... For the time being, simply wrap your call in a try/catch block.
+The Eventbrite API will return errors as required. I am still looking for a nicer way to handle these exceptions... For the time being, simply wrap your call in a try/catch block.
 
 ```php
 try {
     
-    Rancher::host()->deactivate("1h1");
+    Rancher::event()->publish(1234);
     
-} catch(ClientException $e) {
+} catch(EventbriteErrorException $e) {
     $response = $e->getResponse();
     $responseBodyAsString = $response->getBody()->getContents();
     echo $responseBodyAsString;
 }
 ```
 
-## Rancher API Endpoint Coverage
-The Rancher API is extensive. I've attempted to cover all of the key endpoints  but there are a few endpoints that are currently unimplemented.
-- Host `[5/8]`
+## Implemented Eventbrite API Endpoints
+- Event
+  - get
+  - create
+  - update
+  - list
+    - byEventSeriesId
+    - byVenueId
+    - byOrganizationId
+  - publish
+  - unpublish
+  - cancel
   - delete
-  - dockersocket
-  - purge 
-- Container `[7/18]`
-  - update 
-  - delete
-  - allocate
-  - console
-  - deallocate
-  - execute 
-  - logs 
-  - migrate
-  - setlabels
-  - updatehealthy
-  - updateunhealthy
-- Environment `[6/14]`
-  - addoutputs
-  - cancelrollback
-  - cancelupgrade 
-  - error
-  - exportconfig
-  - finishupgrade
-  - rollback
-  - upgrade
-- Project `[5/8]`
-  - purge 
-  - restore
-  - setmembers
-- Service `[13/14]`
-  - remove
-- LoadBalancerService `[7/13]`
-  - cancelrollback
-  - cancelupgrade
-  - finishupgrade
-  - remove
-  - rollback
-  - upgrade
-- Account `[0]`
-- ApiKey `[0]`
-- Certificate `[0]`
-- DnsService `[0]`
-- externalService `[0]`
-- Identity `[0]`
-- Machine `[0]`
-- Mount `[0]`
-- ProjectMember `[0]`
-- StoragePool `[0]`
-- Volume `[0]`
+- Category
+  - get
+  - list
+- Subcategory
+  - get
+  - list 
+- Display Settings
+  - getByEventId
+  - update
+- User
+  - get 
+  - me
+- Venue
+  - get
+  - update
+  - list
+- Format
+  - get
+  - list
+- Media
+  - get
+  - createUpload
+  - createUpload
+
+The Eventbrite API is extensive. I've attempted to cover all of the key endpoints  but there are a few endpoints that are currently unimplemented.
 
 ## License
 

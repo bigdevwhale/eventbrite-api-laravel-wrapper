@@ -25,5 +25,5 @@ interface DisplaySettings
     /**
      * {@inheritdoc}
      */
-    public function get($eventId);
+    public function get(int $eventId);
 }

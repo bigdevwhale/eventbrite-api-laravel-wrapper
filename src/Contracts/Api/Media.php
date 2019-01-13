@@ -15,13 +15,9 @@ use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 interface Media
 {
     /**
-     * Send update request to API
-     *
-     * @param int $eventId
-     * @param array $displaySettings
-     * @return DisplaySettingsEntity
+     * {@inheritdoc}
      */
-    public function update(int $eventId, array $displaySettings);
+    public function get($id);
 
     /**
      * Create a Media Upload
