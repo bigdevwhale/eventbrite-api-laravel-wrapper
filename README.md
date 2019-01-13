@@ -141,12 +141,11 @@ Eventbrite::displaySettings()->get(int $eventId);
 
 #### Update Display Settings
 ```php 
-Eventbrite::displaySettings()->update(int $eventId, array $displaySettings)
-;
+Eventbrite::displaySettings()->update(int $eventId, array $displaySettings);
 ```
 
 ### User
-#### RRetrieve a User by User ID
+#### Retrieve a User by User ID
 ```php 
 Eventbrite::user()->get($userId);
 ```
