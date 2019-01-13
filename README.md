@@ -23,7 +23,7 @@ Add the Laravel Eventbrite service provider to your `config/app.php` file in the
 ```
 
 
-**Rancher facade alias**
+**Eventbrite facade alias**
 Then add the `Eventbrite` facade to your `aliases` key: `'Eventbrite' => Marat555\Eventbrite\Facades\Eventbrite::class.  
 
 
@@ -31,11 +31,11 @@ Then add the `Eventbrite` facade to your `aliases` key: `'Eventbrite' => Marat55
 ## Configuration
 Configuration can be done via your `.env` file.
 ```
-RANCHER_BASE_URL=https://www.eventbriteapi.com/v3/
+Eventbrite_BASE_URL=https://www.eventbriteapi.com/v3/
 EVENTBRITE_TOKEN=xxxxxxx
 ````
 >You may also publish the config file to `config/eventbrite.pzhp` for editing:
-`php artisan vendor:publish --provider="Benmag\Rancher\RancherServiceProvider"`
+`php artisan vendor:publish --provider="Marat555\Eventbrite\EventbriteServiceProvider"`
  
  
 ## Usage
@@ -226,7 +226,7 @@ The Eventbrite API will return errors as required. I am still looking for a nice
 ```php
 try {
     
-    Rancher::event()->publish(1234);
+    Eventbrite::event()->publish(1234);
     
 } catch(EventbriteErrorException $e) {
     $response = $e->getResponse();
