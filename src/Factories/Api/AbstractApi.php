@@ -90,9 +90,8 @@ abstract class AbstractApi
     /**
      * Get a specified Entity from the API resource.
      *
-     * @param null $id
+     * @param $id
      * @return mixed
-     * @throws \Exception
      */
     public function get($id)
     {
@@ -156,7 +155,7 @@ abstract class AbstractApi
      * @param $expansion
      * @return mixed
      */
-    public function expand($expansion)
+    public function expand(string $expansion)
     {
         $this->expansion = $expansion;
         return $this;

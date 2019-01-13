@@ -2,7 +2,9 @@
 
 namespace Marat555\Eventbrite;
 
+use Marat555\Eventbrite\Factories\Api\DisplaySettings;
 use Marat555\Eventbrite\Factories\Api\Format;
+use Marat555\Eventbrite\Factories\Api\Media;
 use Marat555\Eventbrite\Factories\Api\Venue;
 use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\Api\Category;
@@ -85,5 +87,21 @@ class Eventbrite
     public function format()
     {
         return new Format($this->client);
+    }
+
+    /**
+     * @return DisplaySettings
+     */
+    public function displaySettings()
+    {
+        return new displaySettings($this->client);
+    }
+
+    /**
+     * @return Media
+     */
+    public function media()
+    {
+        return new Media($this->client);
     }
 }
