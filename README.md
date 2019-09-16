@@ -83,7 +83,7 @@ Eventbrite::event()->list('venue', int $venueId, array $filterParams = []);
 
 #### List Events by Organization ID
 ```php
-Eventbrite::event()->list('organization', int $organizationId, array $filterParams = []);
+Eventbrite::event()->list('organizations', int $organizationId, array $filterParams = []);
 ```
 
 #### List Events by Event Series ID
