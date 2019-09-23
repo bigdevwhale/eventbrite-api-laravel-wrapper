@@ -2,6 +2,10 @@
 
 Eventbrite API wrapper for Laravel. This package provides a simple interface to Eventbite's (awesome) API. Organize Eventbrite integration with expressive, clean PHP.
 
+## Requirements
+PHP >= 7.2
+Laravel >= 6.0
+
 
 ## Installation
 Laravel Eventbrite uses composer to make installation a breeze.
