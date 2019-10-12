@@ -5,6 +5,7 @@ namespace Marat555\Eventbrite\Factories;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Client as HttpClient;
 use \Marat555\Eventbrite\Contracts\Client as ClientInterface;
+use Illuminate\Support\Arr;
 
 /**
  * Eventbrite API wrapper for Laravel
@@ -56,7 +57,7 @@ class Client implements ClientInterface
      */
     private function prepareData($params = null, $options = [])
     {
-        if (array_get($options, 'content_type') == "json") {
+        if (Arr::get($options, 'content_type') == "json") {
             $data['json'] = $params; // pass data as array which gets json_encoded
         } else {
             $data['query'] = $this->prepareQueryString($params); // pass data as query string
