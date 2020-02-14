@@ -2,6 +2,7 @@
 
 namespace Marat555\Eventbrite\Factories\Api;
 
+use Illuminate\Support\Facades\Log;
 use Marat555\Eventbrite\Factories\Client;
 use Marat555\Eventbrite\Factories\HelperEntity\ObjectList;
 use Marat555\Eventbrite\Factories\HelperEntity\Pagination;

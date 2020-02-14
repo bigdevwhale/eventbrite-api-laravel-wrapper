@@ -31,7 +31,6 @@ class Eventbrite
 
     public function setClient($client)
     {
-        Log::info("client");
         $this->client = $client;
     }
 
