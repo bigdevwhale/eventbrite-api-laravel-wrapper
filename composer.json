@@ -1,5 +1,5 @@
 {
-  "name": "marat555/eventbrite",
+  "name": "jmurphy/eventbrite",
   "description": "Laravel PHP Facade/Wrapper for the Eventbrite Data API v3",
   "keywords": ["eventbrite", "api", "event", "laravel", "marat555"],
   "homepage": "https://github.com/Marat555/eventbrite-api-laravel-wrapper",
