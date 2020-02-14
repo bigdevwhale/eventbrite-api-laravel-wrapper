@@ -4,6 +4,7 @@ namespace Marat555\Eventbrite\Factories;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Client as HttpClient;
+use Illuminate\Support\Facades\Log;
 use \Marat555\Eventbrite\Contracts\Client as ClientInterface;
 use Illuminate\Support\Arr;
 
@@ -85,6 +86,7 @@ class Client implements ClientInterface
      */
     public function get($endPoint, array $params = [], array $options = [])
     {
+        Log::info("data get");
         $params += ['token' => $this->token];
         $response = $this->client->get($endPoint, $this->prepareData($params, $options));
         switch ($response->getHeader('content-type')) {

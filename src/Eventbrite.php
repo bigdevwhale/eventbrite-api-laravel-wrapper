@@ -2,6 +2,7 @@
 
 namespace Marat555\Eventbrite;
 
+use Illuminate\Support\Facades\Log;
 use Marat555\Eventbrite\Factories\Api\DisplaySettings;
 use Marat555\Eventbrite\Factories\Api\Format;
 use Marat555\Eventbrite\Factories\Api\Media;
@@ -30,6 +31,7 @@ class Eventbrite
 
     public function setClient($client)
     {
+        Log::info("client");
         $this->client = $client;
     }
 
