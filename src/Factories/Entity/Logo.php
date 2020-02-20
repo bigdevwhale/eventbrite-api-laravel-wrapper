@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: josephmurphy
- * Date: 2/13/20
- * Time: 10:43 PM
- */
 
 namespace Marat555\Eventbrite\Factories\Entity;
 
