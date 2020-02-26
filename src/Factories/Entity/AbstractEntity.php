@@ -56,10 +56,6 @@ abstract class AbstractEntity
      */
     public function setProperty($property, $value)
     {
-//        Log::info($property);
-//        Log::info($this->convertToCamelCaseWithFirstUpperSymbol($property));
-//        Log::info(print_r($value));
-//        Log::info(json_encode($value));
         if (!empty($value)) {
             // Get the class of the new entity we want to instantiate
             $class = (new \ReflectionClass($this))->getNamespaceName() . "\\" . $this->convertToCamelCaseWithFirstUpperSymbol($property);
