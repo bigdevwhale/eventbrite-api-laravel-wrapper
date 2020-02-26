@@ -13,14 +13,14 @@ class Address extends AbstractEntity
      *
      * @var string
      */
-    public $address1;
+    public $address_1;
 
     /**
      * The street/location address (part 2)
      *
      * @var string
      */
-    public $address2;
+    public $address_2;
 
     /**
      * City
