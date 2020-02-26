@@ -4,7 +4,6 @@ namespace Marat555\Eventbrite\Factories;
 
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Client as HttpClient;
-use Illuminate\Support\Facades\Log;
 use \Marat555\Eventbrite\Contracts\Client as ClientInterface;
 use Illuminate\Support\Arr;
 
