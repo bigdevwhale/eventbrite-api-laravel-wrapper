@@ -2,8 +2,6 @@
 
 namespace Marat555\Eventbrite\Factories\Entity;
 
-use Illuminate\Support\Facades\Log;
-
 abstract class AbstractEntity
 {
     /**
