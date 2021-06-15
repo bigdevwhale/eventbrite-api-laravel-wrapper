@@ -23,7 +23,7 @@ class ObjectList
      * @param Pagination|null $pagination
      * @param array $objects
      */
-    public function __construct(Pagination $pagination, array $objects)
+    public function __construct(?Pagination $pagination, array $objects)
     {
         $this->pagination = $pagination;
         $this->objects = $objects;
